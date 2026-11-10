@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TORQ Products | Tyre & Wheel Care</title>
+  <meta name="description" content="Browse premium tyres, wheels, and care products selected for performance, safety, and confident driving.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">T</div>
+        <div>
+          <div class="logo-title">TOR<span>Q</span></div>
+          <span class="logo-tagline">Tyre & Wheel Care</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="home-premium.html" class="nav-link">Home 2</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="products.html" class="nav-link active">Products</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+      <div class="header-actions">
+        <button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button>
+        <button class="control-btn rtl-toggle-btn" title="Toggle RTL">RTL</button>
+        <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a>
+        <button class="btn btn-sm btn-primary header-cta" onclick="window.openModal('bookingModal')">Book a Service</button>
+        <button class="hamburger-btn" aria-label="Open menu"><i data-lucide="menu"></i></button>
+      </div>
+    </div>
+  </header>
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <div class="logo"><div class="logo-mark">T</div><div class="logo-title">TOR<span>Q</span></div></div>
+      <button class="close-drawer-btn" aria-label="Close menu"><i data-lucide="x"></i></button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home <i data-lucide="chevron-right"></i></a>
+      <a href="home-premium.html" class="mobile-nav-link">Home 2 <i data-lucide="chevron-right"></i></a>
+      <a href="about.html" class="mobile-nav-link">About <i data-lucide="chevron-right"></i></a>
+      <a href="services.html" class="mobile-nav-link">Services <i data-lucide="chevron-right"></i></a>
+      <a href="projects.html" class="mobile-nav-link">Projects <i data-lucide="chevron-right"></i></a>
+      <a href="products.html" class="mobile-nav-link active">Products <i data-lucide="chevron-right"></i></a>
+      <a href="pricing.html" class="mobile-nav-link">Pricing <i data-lucide="chevron-right"></i></a>
+      <a href="contact.html" class="mobile-nav-link">Contact <i data-lucide="chevron-right"></i></a>
+      <a href="dashboard.html" class="mobile-nav-link">Dashboard <i data-lucide="chevron-right"></i></a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
+      <button class="btn btn-primary" onclick="window.openModal('bookingModal')">Book a Service</button>
+      <a href="login.html" class="btn btn-outline">Login</a>
+    </div>
+  </div>
+
+  <main>
+    <section class="section-padding products-hero" style="background: linear-gradient(135deg, var(--primary) 0%, #ff8956 100%); color: white; padding-top: calc(var(--header-height) + 5rem);">
+      <div class="container text-center">
+        <div class="reveal">
+          <span class="eyebrow" style="color:#fff; opacity:0.9;">Tyre collection</span>
+          <h1 style="color:white; font-size: clamp(2.6rem, 4vw, 4rem); margin: 0.75rem 0 1rem; letter-spacing:-0.06em;">Find the right tyre for every drive.</h1>
+          <p style="font-size:1.15rem; opacity:0.9; max-width:740px; margin:0 auto;">Premium fitment, high-grip compounds, and weather-ready options for your vehicle and lifestyle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding">
+      <div class="container">
+        <div class="products-layout">
+          <aside class="reveal card-surface products-filters">
+            <div style="margin-bottom:2rem;">
+              <h4 style="margin:0 0 1rem; font-size:1.1rem;">Search products</h4>
+              <div style="position:relative;">
+                <input id="productSearch" type="text" placeholder="Search tyres or brands" style="width:100%; padding: 0.9rem 1rem 0.9rem 2.8rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--panel-soft); color: var(--text-main);">
+                <i data-lucide="search" style="position:absolute; left:0.9rem; top:50%; transform:translateY(-50%); width:18px; color:var(--text-muted);"></i>
+              </div>
+            </div>
+            <div style="margin-bottom:2rem;">
+              <h4 style="margin:0 0 1rem; font-size:1.1rem;">Category</h4>
+              <div style="display:grid; gap:0.75rem; color:var(--text-soft);">
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="performance" checked> Performance</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="all-season" checked> All-season</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="suv" checked> SUV</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="winter" checked> Winter</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="accessories" checked> Accessories</label>
+              </div>
+            </div>
+            <div style="margin-bottom:2rem;">
+              <h4 style="margin:0 0 1rem; font-size:1.1rem;">Max price</h4>
+              <input type="range" id="priceRange" min="100" max="600" value="600" style="width:100%; accent-color: var(--primary);">
+              <div style="display:flex; justify-content:space-between; margin-top:0.5rem; font-weight:700; color:var(--text-soft);"><span>$100</span><span id="priceValue">$600</span></div>
+            </div>
+            <div>
+              <h4 style="margin:0 0 1rem; font-size:1.1rem;">Sort by</h4>
+              <select id="productSort" style="width:100%; padding: 0.9rem 1rem; border:1px solid var(--border-color); border-radius:12px; background: var(--panel-soft); color: var(--text-main);">
+                <option value="featured">Featured</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+                <option value="newest">Newest Arrivals</option>
+              </select>
+            </div>
+          </aside>
+          <div class="products-results">
+            <div class="products-results-bar">
+              <div>
+                <span class="eyebrow">The TORQ collection</span>
+                <h2>Engineered for your drive.</h2>
+              </div>
+              <span id="productResultCount" class="product-result-count" aria-live="polite"></span>
+            </div>
+            <div id="productGrid" class="product-grid reveal"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo" style="margin-bottom:1rem; color:white;">
+            <div class="logo-mark">T</div>
+            <div>
+              <div class="logo-title" style="color:white;">TOR<span>Q</span></div>
+              <span class="logo-tagline" style="color:rgba(255,255,255,0.7);">Tyre & Wheel Care</span>
+            </div>
+          </div>
+          <p>Expert tyre advice, precision alignment, and premium wheel care tailored to performance and everyday confidence.</p>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul class="footer-links">
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="products.html">Tyre collection</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li>+1 (415) 555-0147</li>
+            <li>hello@torqtyres.com</li>
+            <li>249 Harbor Avenue, Houston</li>
+            <li>Mon-Sat • 8:00 AM - 7:00 PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 TORQ – Tyre & Wheel Care</span><span>Precision. Performance. Peace of mind.</span></div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="bookingModal"><div class="modal-card"><div class="modal-header"><h3 class="modal-title">Book a service</h3><button class="modal-close-btn"><i data-lucide="x"></i></button></div><div class="modal-body"><form><div class="form-grid"><div class="input-group"><label>Full name</label><input type="text" placeholder="Your name"></div><div class="input-group"><label>Phone</label><input type="tel" placeholder="(555) 555-1234"></div><div class="input-group"><label>Vehicle</label><input type="text" placeholder="BMW 3 Series"></div><div class="input-group"><label>Service</label><select><option>Wheel alignment</option><option>Tyre replacement</option><option>Brake inspection</option><option>Suspension tuning</option></select></div></div><div class="form-actions"><button class="btn btn-primary" type="button">Confirm request</button></div></form></div></div></div>
+  <div class="modal-overlay" id="productModal"><div class="modal-card"><div class="modal-header"><h3 class="modal-title">Tyre details</h3><button class="modal-close-btn" aria-label="Close details"><i data-lucide="x"></i></button></div><div class="modal-body" id="productDetailContent"></div></div></div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

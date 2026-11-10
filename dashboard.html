@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard – TORQ Automotive Care</title>
+  <meta name="description" content="Manage your vehicle garage, review upcoming 3D laser wheel alignment appointments, and inspect tyre service history.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="dashboard-layout customer-dashboard-main">
+    
+    <!-- ==========================================================================
+         FIXED SIDEBAR (As requested)
+         Links: Overview, My Profile, My Vehicles, Book a Service, My Appointments,
+                Service History, Notifications, Settings, Logout
+         ========================================================================== -->
+    <aside class="dashboard-sidebar" aria-label="Customer Sidebar Navigation">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 44 44" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="19" stroke="#142536" stroke-width="3" stroke-dasharray="6 3"/>
+              <circle cx="22" cy="22" r="12" stroke="#F28C28" stroke-width="2.5"/>
+              <circle cx="22" cy="22" r="5" fill="#142536"/>
+              <path d="M22 3L22 9M22 35L22 41M3 22L9 22M35 22L41 22M9 9L13 13M31 31L35 35M35 9L31 13M13 31L9 35" stroke="#F28C28" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-title" style="font-size: 1.35rem;">TOR<span>Q</span></div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-nav-item active" data-view="viewOverview">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#profile" class="sidebar-nav-item" data-view="viewProfile">
+          <i data-lucide="user"></i>
+          <span>My Profile</span>
+        </a>
+        <a href="#vehicles" class="sidebar-nav-item" data-view="viewVehicles">
+          <i data-lucide="car"></i>
+          <span>My Vehicles</span>
+          <span class="sidebar-badge">2</span>
+        </a>
+        <a href="#book" class="sidebar-nav-item" data-view="viewBookService">
+          <i data-lucide="calendar-plus"></i>
+          <span>Book a Service</span>
+        </a>
+        <a href="#appointments" class="sidebar-nav-item" data-view="viewAppointments">
+          <i data-lucide="calendar"></i>
+          <span>My Appointments</span>
+        </a>
+        <a href="#history" class="sidebar-nav-item" data-view="viewHistory">
+          <i data-lucide="clock-rewind"></i>
+          <span>Service History</span>
+        </a>
+        <a href="#notifications" class="sidebar-nav-item" data-view="viewNotifications">
+          <i data-lucide="bell"></i>
+          <span>Notifications</span>
+          <span class="sidebar-badge" style="background: rgba(16, 185, 129, 0.15); color: #10B981;">3</span>
+        </a>
+        <a href="#settings" class="sidebar-nav-item" data-view="viewSettings">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-logout-btn action-logout-btn">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         MAIN DASHBOARD BODY
+         ========================================================================== -->
+    <div class="dashboard-main">
+      
+      <!-- Topbar Header -->
+      <header class="dashboard-topbar">
+        <div class="topbar-left">
+          <button class="dashboard-toggle-sidebar" aria-label="Toggle sidebar">
+            <i data-lucide="menu"></i>
+          </button>
+          <h1 class="topbar-title" id="dashboardPageTitle">Dashboard Overview</h1>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Back to website link -->
+          <a href="index.html" class="btn btn-sm btn-outline" style="display: none; @media(min-width: 768px){display: inline-flex;}">
+            <i data-lucide="external-link"></i> Website
+          </a>
+
+          <!-- Theme Toggle -->
+          <button class="control-btn theme-toggle-btn" title="Toggle Dark/Light Mode">
+            <i data-lucide="moon"></i>
+          </button>
+
+          <!-- RTL Toggle -->
+          <button class="control-btn rtl-toggle-btn" title="Toggle RTL/LTR">
+            <span class="rtl-label" style="font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700;">RTL</span>
+          </button>
+
+          <!-- Notification Dropdown Panel -->
+          <div class="notification-btn-wrap">
+            <button class="control-btn" id="notifDropdownBtn" aria-label="View notifications">
+              <i data-lucide="bell"></i>
+              <span class="notification-badge">3</span>
+            </button>
+            <div class="dropdown-menu" id="notifDropdownMenu">
+              <div class="dropdown-header">
+                <span>Recent Alerts</span>
+                <span style="font-size: 0.75rem; color: var(--secondary); font-weight: 600;">3 Unread</span>
+              </div>
+              <div class="dropdown-item">
+                <i data-lucide="check-circle" style="color: var(--success); width: 18px; height: 18px; margin-top: 2px;"></i>
+                <div>
+                  <strong>Appointment Confirmed</strong>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">TX-4921 Laser Alignment on Nov 10 at 10:00 AM</div>
+                </div>
+              </div>
+              <div class="dropdown-item">
+                <i data-lucide="wrench" style="color: var(--secondary); width: 18px; height: 18px; margin-top: 2px;"></i>
+                <div>
+                  <strong>Tyre Rotation Recommended</strong>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">BMW M3 has logged 8,000 km since last rotation</div>
+                </div>
+              </div>
+              <div class="dropdown-item">
+                <i data-lucide="gift" style="color: #3B82F6; width: 18px; height: 18px; margin-top: 2px;"></i>
+                <div>
+                  <strong>Seasonal Inspection Perk</strong>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Free nitrogen check active on your membership</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Dropdown -->
+          <div style="position: relative;">
+            <div class="user-profile-menu-btn" id="userProfileDropdownBtn">
+              <div class="user-avatar-sm dashboard-user-avatar">AW</div>
+              <div style="text-align: left; display: none; @media(min-width:640px){display:block;}">
+                <div style="font-size: 0.88rem; font-weight: 700; font-family: var(--font-heading);" class="dashboard-user-name">Alexander Wright</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Valued Member</div>
+              </div>
+              <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted);"></i>
+            </div>
+            <div class="dropdown-menu" id="userProfileDropdownMenu">
+              <div class="dropdown-header">
+                <span>Account Navigation</span>
+              </div>
+              <div class="dropdown-item" onclick="document.querySelector('[data-view=viewProfile]').click();">
+                <i data-lucide="user"></i> <span>Edit Profile</span>
+              </div>
+              <div class="dropdown-item" onclick="document.querySelector('[data-view=viewVehicles]').click();">
+                <i data-lucide="car"></i> <span>Garage Vehicles</span>
+              </div>
+              <div class="dropdown-item" onclick="document.querySelector('[data-view=viewSettings]').click();">
+                <i data-lucide="settings"></i> <span>Preferences</span>
+              </div>
+              <div style="border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 0.5rem;">
+                <div class="dropdown-item action-logout-btn" style="color: var(--danger);">
+                  <i data-lucide="log-out"></i> <span>Logout</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- Dashboard View Containers -->
+      <main class="dashboard-content">
+
+        <!-- ==========================================================================
+             VIEW 1: OVERVIEW (Default active view)
+             Personalized welcome message, Total Bookings, Upcoming Appointments,
+             Completed Services, Pending Services, Recent Booking History, Vehicles
+             ========================================================================== -->
+        <div class="dashboard-view active" id="viewOverview">
+          
+          <!-- Personalized Welcome Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h2>Welcome back, <span class="dashboard-user-name">Alexander Wright</span>!</h2>
+              <p>Your vehicle garage is fully synchronized. 1 laser alignment appointment is scheduled this week.</p>
+            </div>
+            <button class="btn btn-primary" onclick="document.querySelector('[data-view=viewBookService]').click();">
+              <i data-lucide="calendar-plus"></i> Book New Service
+            </button>
+          </div>
+
+          <!-- 4 Metrics Grid (As requested: Total Bookings, Upcoming, Completed, Pending) -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Total Bookings</h6>
+                <div class="metric-value" id="metricTotalBookings">4</div>
+              </div>
+              <div class="metric-icon-box"><i data-lucide="calendar-range"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Upcoming Appointments</h6>
+                <div class="metric-value" id="metricUpcomingBookings">1</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6;"><i data-lucide="clock"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Completed Services</h6>
+                <div class="metric-value" id="metricCompletedBookings">2</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(16, 185, 129, 0.12); color: #10B981;"><i data-lucide="check-check"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Pending Approval</h6>
+                <div class="metric-value" id="metricPendingBookings">1</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;"><i data-lucide="hourglass"></i></div>
+            </div>
+          </div>
+
+          <!-- Recent Booking History Table -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Recent Booking History</h3>
+              <button class="btn btn-sm btn-outline" onclick="document.querySelector('[data-view=viewAppointments]').click();">
+                View All Appointments <i data-lucide="arrow-right"></i>
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Service & Vehicle</th>
+                    <th>Date & Slot</th>
+                    <th>Estimated Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="recentBookingsTableBody">
+                  <!-- Populated dynamically via js/dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Vehicle Garage Snapshot -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Registered Garage Vehicles</h3>
+              <button class="btn btn-sm btn-primary" data-modal-open="addVehicleModal">
+                <i data-lucide="plus"></i> Add New Vehicle
+              </button>
+            </div>
+            <div class="panel-body">
+              <div class="vehicles-grid" id="vehiclesGrid">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 2: MY PROFILE
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewProfile">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Personal Profile & Contact Details</h3>
+            </div>
+            <div class="panel-body">
+              <form id="profileForm">
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="profName">Full Name</label>
+                    <input type="text" id="profName" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="profEmail">Email Address (Read Only)</label>
+                    <input type="email" id="profEmail" class="form-control" disabled style="opacity: 0.7;">
+                  </div>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="profPhone">Contact Phone</label>
+                    <input type="tel" id="profPhone" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="profCity">Primary Workshop Location</label>
+                    <select id="profCity" class="form-control">
+                      <option value="ny">Autoplex District, NY Center (Primary)</option>
+                      <option value="nj">Express Bay, New Jersey</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="custom-checkbox-label">
+                    <input type="checkbox" checked> Receive SMS reminders 2 hours before scheduled alignment appointments
+                  </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                  Save Profile Changes
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 3: MY VEHICLES
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewVehicles">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+              <h2>Your Vehicle Garage</h2>
+              <p>Keep track of tyre dimensions, alignment dates and seasonal setups.</p>
+            </div>
+            <button class="btn btn-primary" data-modal-open="addVehicleModal">
+              <i data-lucide="plus"></i> Add Vehicle
+            </button>
+          </div>
+
+          <div class="vehicles-grid" id="vehiclesGridDedicated">
+            <!-- Will mirror registered vehicles -->
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 4: BOOK A SERVICE
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewBookService">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Direct Service Bay Reservation</h3>
+            </div>
+            <div class="panel-body">
+              <form class="appointment-booking-form">
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" name="name" class="form-control" value="Alexander Wright" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Contact Phone</label>
+                    <input type="tel" name="phone" class="form-control" value="+1 (555) 234-5678" required>
+                  </div>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Select Registered Vehicle</label>
+                    <select name="vehicle" class="form-control">
+                      <option value="BMW M3 Competition (2023)">BMW M3 Competition (2023) [NYC-8921]</option>
+                      <option value="Porsche Macan GTS (2022)">Porsche Macan GTS (2022) [CAL-4420]</option>
+                      <option value="Other Vehicle">Other / Walk-in Vehicle</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Service Category</label>
+                    <select name="service" class="form-control">
+                      <option value="3D Laser Wheel Alignment">3D Laser Wheel Alignment ($79)</option>
+                      <option value="High-Speed Wheel Balancing">High-Speed Wheel Balancing ($49)</option>
+                      <option value="Tyre Replacement (4x)">Tyre Replacement (4x)</option>
+                      <option value="Standard Care Package">Standard Care Package ($99)</option>
+                      <option value="Premium Track Package">Premium Track Package ($169)</option>
+                      <option value="Nitrogen Purge">Nitrogen Purge ($35)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Preferred Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Preferred Time Slot</label>
+                    <select name="time" class="form-control">
+                      <option value="08:30 AM">08:30 AM (Express Morning)</option>
+                      <option value="10:00 AM" selected>10:00 AM</option>
+                      <option value="01:30 PM">01:30 PM</option>
+                      <option value="04:00 PM">04:00 PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Notes / Symptom Description</label>
+                  <textarea name="notes" class="form-control" placeholder="Describe symptoms (e.g. steering pulls right, vibration at 70 mph)..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  <i data-lucide="calendar"></i> Reserve Workshop Bay
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 5: MY APPOINTMENTS
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewAppointments">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">All Customer Appointments</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Service & Vehicle</th>
+                    <th>Date & Time</th>
+                    <th>Rate</th>
+                    <th>Status</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody id="allBookingsTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 6: SERVICE HISTORY
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewHistory">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Archived Service & Diagnostic Logs</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <!-- History Item 1 -->
+                <div style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
+                      <strong>3D Laser Alignment & Nitrogen Purge</strong>
+                      <span class="status-pill status-completed">Completed</span>
+                    </div>
+                    <div style="font-size: 0.88rem; color: var(--text-muted);">Vehicle: BMW M3 Competition • Date: Oct 28, 2026 • Ref #TX-4915</div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn btn-sm btn-outline" onclick="window.showToast('Downloading Hunter 3D Diagnostic PDF report...', 'info');">
+                      <i data-lucide="download"></i> Download Report
+                    </button>
+                    <button class="btn btn-sm btn-primary" onclick="document.querySelector('[data-view=viewBookService]').click();">
+                      Rebook Service
+                    </button>
+                  </div>
+                </div>
+
+                <!-- History Item 2 -->
+                <div style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
+                      <strong>High-Speed Dynamic Road-Force Balancing</strong>
+                      <span class="status-pill status-completed">Completed</span>
+                    </div>
+                    <div style="font-size: 0.88rem; color: var(--text-muted);">Vehicle: Porsche Macan GTS • Date: Sep 14, 2026 • Ref #TX-4882</div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn btn-sm btn-outline" onclick="window.showToast('Downloading Balancing Diagnostic PDF report...', 'info');">
+                      <i data-lucide="download"></i> Download Report
+                    </button>
+                    <button class="btn btn-sm btn-primary" onclick="document.querySelector('[data-view=viewBookService]').click();">
+                      Rebook Service
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 7: NOTIFICATIONS
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewNotifications">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Notification Feed</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="padding: 1rem; border-radius: var(--radius-md); background: var(--bg-body); border-left: 4px solid var(--success);">
+                  <strong>Appointment Confirmed for Nov 10, 10:00 AM</strong>
+                  <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">Your 3D laser alignment slot for BMW M3 Competition has been locked into Bay #2.</p>
+                </div>
+                <div style="padding: 1rem; border-radius: var(--radius-md); background: var(--bg-body); border-left: 4px solid var(--secondary);">
+                  <strong>Seasonal Tyre Pressure Warning</strong>
+                  <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">Temperatures dropped below 10°C this week. Check your tyres for pressure drop or drop by for a free nitrogen purge top-up.</p>
+                </div>
+                <div style="padding: 1rem; border-radius: var(--radius-md); background: var(--bg-body); border-left: 4px solid #3B82F6;">
+                  <strong>Loyalty Discount Available</strong>
+                  <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">You have $25 TORQ loyalty credit applicable to any wheel balancing or alignment plan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 8: SETTINGS
+             ========================================================================== -->
+        <div class="dashboard-view" id="viewSettings">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Preferences & Security</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div>
+                  <h5 style="margin-bottom: 0.5rem;">Change Password</h5>
+                  <div class="form-grid-2">
+                    <input type="password" placeholder="New Password" class="form-control">
+                    <input type="password" placeholder="Confirm New Password" class="form-control">
+                  </div>
+                  <button class="btn btn-sm btn-outline" style="margin-top: 0.75rem;" onclick="window.showToast('Password updated in demo session', 'success');">
+                    Update Password
+                  </button>
+                </div>
+
+                <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                  <h5 style="margin-bottom: 0.5rem;">Interface Preferences</h5>
+                  <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-outline theme-toggle-btn">
+                      <i data-lucide="moon"></i> Toggle Dark Mode
+                    </button>
+                    <button class="btn btn-outline rtl-toggle-btn">
+                      <span class="rtl-label">Switch RTL / LTR</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Add Vehicle Modal Dialog -->
+  <div class="modal-overlay" id="addVehicleModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" aria-label="Close dialog"><i data-lucide="x"></i></button>
+      <div style="margin-bottom: 1.5rem;">
+        <div class="badge-tag">Garage Vehicle</div>
+        <h3>Register New Vehicle</h3>
+      </div>
+      <form id="addVehicleForm">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="vehMake">Vehicle Make *</label>
+            <input type="text" id="vehMake" class="form-control" placeholder="e.g. Audi / BMW / Toyota" required>
+          </div>
+          <div class="form-group">
+            <label for="vehModel">Model & Trim *</label>
+            <input type="text" id="vehModel" class="form-control" placeholder="e.g. RS6 Avant" required>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="vehYear">Model Year</label>
+            <input type="number" id="vehYear" class="form-control" placeholder="2024" value="2024">
+          </div>
+          <div class="form-group">
+            <label for="vehPlate">License Plate *</label>
+            <input type="text" id="vehPlate" class="form-control" placeholder="TEX-9011" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="vehTyreSize">Tyre Fitment Specification</label>
+          <input type="text" id="vehTyreSize" class="form-control" placeholder="e.g. 275/35 R21 (or Leave default)">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          <i data-lucide="plus"></i> Add Vehicle to My Garage
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="js/theme.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

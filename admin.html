@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – TORQ Operations Portal</title>
+  <meta name="description" content="TORQ Automotive administrative back-office: manage customer bookings, product catalog CRUD, service rates, and customer enquiries.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="dashboard-layout admin-dashboard-main">
+    
+    <!-- ==========================================================================
+         ADMIN FIXED SIDEBAR (All requested links)
+         Overview, Customers, Products, Categories, Services, Appointments,
+         Pricing Plans, Reviews, Messages, Reports, Settings, Logout
+         ========================================================================== -->
+    <aside class="dashboard-sidebar" aria-label="Admin Navigation">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 44 44" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="19" stroke="#142536" stroke-width="3" stroke-dasharray="6 3"/>
+              <circle cx="22" cy="22" r="12" stroke="#F28C28" stroke-width="2.5"/>
+              <circle cx="22" cy="22" r="5" fill="#142536"/>
+              <path d="M22 3L22 9M22 35L22 41M3 22L9 22M35 22L41 22M9 9L13 13M31 31L35 35M35 9L31 13M13 31L9 35" stroke="#F28C28" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="logo-title" style="font-size: 1.35rem;">TOR<span>Q</span> <span style="font-size: 0.75rem; background: var(--secondary); color: #fff; padding: 0.15rem 0.45rem; border-radius: var(--radius-sm); margin-left: 0.25rem;">ADMIN</span></div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="sidebar-nav-item active" data-view="adminViewOverview">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#customers" class="sidebar-nav-item" data-view="adminViewCustomers">
+          <i data-lucide="users"></i>
+          <span>Customers</span>
+        </a>
+        <a href="#products" class="sidebar-nav-item" data-view="adminViewProducts">
+          <i data-lucide="package"></i>
+          <span>Products</span>
+        </a>
+        <a href="#categories" class="sidebar-nav-item" data-view="adminViewCategories">
+          <i data-lucide="folder-tree"></i>
+          <span>Categories</span>
+        </a>
+        <a href="#services" class="sidebar-nav-item" data-view="adminViewServices">
+          <i data-lucide="wrench"></i>
+          <span>Services</span>
+        </a>
+        <a href="#appointments" class="sidebar-nav-item" data-view="adminViewAppointments">
+          <i data-lucide="calendar"></i>
+          <span>Appointments</span>
+          <span class="sidebar-badge" id="adminSidebarPendingBadge">1 Pending</span>
+        </a>
+        <a href="#pricing" class="sidebar-nav-item" data-view="adminViewPricing">
+          <i data-lucide="tag"></i>
+          <span>Pricing Plans</span>
+        </a>
+        <a href="#reviews" class="sidebar-nav-item" data-view="adminViewReviews">
+          <i data-lucide="star"></i>
+          <span>Reviews</span>
+        </a>
+        <a href="#messages" class="sidebar-nav-item" data-view="adminViewMessages">
+          <i data-lucide="mail"></i>
+          <span>Messages</span>
+        </a>
+        <a href="#reports" class="sidebar-nav-item" data-view="adminViewReports">
+          <i data-lucide="bar-chart-3"></i>
+          <span>Reports</span>
+        </a>
+        <a href="#settings" class="sidebar-nav-item" data-view="adminViewSettings">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="sidebar-logout-btn action-logout-btn">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         MAIN ADMIN DASHBOARD BODY
+         ========================================================================== -->
+    <div class="dashboard-main">
+      
+      <!-- Topbar Header -->
+      <header class="dashboard-topbar">
+        <div class="topbar-left">
+          <button class="dashboard-toggle-sidebar" aria-label="Toggle sidebar">
+            <i data-lucide="menu"></i>
+          </button>
+          <h1 class="topbar-title" id="adminPageTitle">Admin Overview</h1>
+        </div>
+
+        <div class="topbar-right">
+          <a href="index.html" class="btn btn-sm btn-outline" style="display: none; @media(min-width: 768px){display: inline-flex;}">
+            <i data-lucide="external-link"></i> Live Website
+          </a>
+
+          <!-- Theme Toggle -->
+          <button class="control-btn theme-toggle-btn" title="Toggle Theme">
+            <i data-lucide="moon"></i>
+          </button>
+
+          <!-- RTL Toggle -->
+          <button class="control-btn rtl-toggle-btn" title="Toggle RTL/LTR">
+            <span class="rtl-label" style="font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700;">RTL</span>
+          </button>
+
+          <!-- Admin Notifications -->
+          <div class="notification-btn-wrap">
+            <button class="control-btn" id="adminNotifBtn" aria-label="Notifications">
+              <i data-lucide="bell"></i>
+              <span class="notification-badge">2</span>
+            </button>
+            <div class="dropdown-menu" id="adminNotifMenu">
+              <div class="dropdown-header">
+                <span>System Notifications</span>
+              </div>
+              <div class="dropdown-item">
+                <i data-lucide="calendar" style="color: var(--secondary); width: 18px; height: 18px; margin-top: 2px;"></i>
+                <div>
+                  <strong>New Online Booking Received</strong>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Ref TX-4922 pending approval</div>
+                </div>
+              </div>
+              <div class="dropdown-item">
+                <i data-lucide="alert-circle" style="color: var(--warning); width: 18px; height: 18px; margin-top: 2px;"></i>
+                <div>
+                  <strong>Stock Warning</strong>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">CrossContact AX6 SUV tyre is out of stock</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Profile Badge -->
+          <div style="position: relative;">
+            <div class="user-profile-menu-btn" id="adminProfileBtn">
+              <div class="user-avatar-sm" style="background: var(--primary); color: #fff;">AD</div>
+              <div style="text-align: left; display: none; @media(min-width:640px){display:block;}">
+                <div style="font-size: 0.88rem; font-weight: 700; font-family: var(--font-heading);">Admin Operations</div>
+                <div style="font-size: 0.75rem; color: var(--secondary); font-weight: 600;">Super Administrator</div>
+              </div>
+              <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted);"></i>
+            </div>
+            <div class="dropdown-menu" id="adminProfileMenu">
+              <div class="dropdown-header">Admin Account</div>
+              <div class="dropdown-item" onclick="document.querySelector('[data-view=adminViewSettings]').click();">
+                <i data-lucide="settings"></i> System Settings
+              </div>
+              <div style="border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 0.5rem;">
+                <div class="dropdown-item action-logout-btn" style="color: var(--danger);">
+                  <i data-lucide="log-out"></i> Logout
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- Admin Main Content View Switcher -->
+      <main class="dashboard-content">
+
+        <!-- ==========================================================================
+             ADMIN VIEW 1: OVERVIEW (Metrics & Recent Appointments)
+             Metrics: Total Customers, Total Products, Total Appointments,
+                      Pending Appointments, Completed Services, Total Revenue
+             ========================================================================== -->
+        <div class="dashboard-view active" id="adminViewOverview">
+          
+          <!-- 6 Key Metrics (As strictly specified in Prompt) -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Total Customers</h6>
+                <div class="metric-value" id="adminMetricCustomers">5</div>
+              </div>
+              <div class="metric-icon-box"><i data-lucide="users"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Total Products</h6>
+                <div class="metric-value" id="adminMetricProducts">12</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6;"><i data-lucide="package"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Total Appointments</h6>
+                <div class="metric-value" id="adminMetricAppointments">4</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6;"><i data-lucide="calendar"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Pending Approval</h6>
+                <div class="metric-value" id="adminMetricPending" style="color: var(--warning);">1</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(245, 158, 11, 0.12); color: var(--warning);"><i data-lucide="clock"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Completed Services</h6>
+                <div class="metric-value" id="adminMetricCompleted" style="color: var(--success);">2</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(16, 185, 129, 0.12); color: var(--success);"><i data-lucide="check-check"></i></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h6>Total Revenue</h6>
+                <div class="metric-value" id="adminMetricRevenue" style="color: var(--secondary);">$5,948</div>
+              </div>
+              <div class="metric-icon-box" style="background: rgba(242, 140, 40, 0.15); color: var(--secondary);"><i data-lucide="dollar-sign"></i></div>
+            </div>
+          </div>
+
+          <!-- Recent Appointments Table with Actions (Confirm, Complete, Cancel) -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">Recent Service Bookings</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Click checkmark to confirm pending slots or mark service completed.</p>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="document.querySelector('[data-view=adminViewAppointments]').click();">
+                View All Bookings <i data-lucide="arrow-right"></i>
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Customer Name</th>
+                    <th>Service & Vehicle</th>
+                    <th>Date & Slot</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="adminRecentAppointmentsTable">
+                  <!-- Populated dynamically via js/admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quick Product Catalog Preview -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Product Inventory Status</h3>
+              <button class="btn btn-sm btn-primary" data-modal-open="adminAddProductModal">
+                <i data-lucide="plus"></i> Add New Product
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Media</th>
+                    <th>Product & Specification</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock Status</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody id="adminProductsTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 2: CUSTOMERS (Customer Management Interface)
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewCustomers">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Customer Database</h3>
+              <div class="search-input-box" style="min-width: 250px;">
+                <i data-lucide="search"></i>
+                <input type="text" placeholder="Search customer by name or phone..." oninput="/* frontend demo */">
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Customer Name & Email</th>
+                    <th>Phone</th>
+                    <th>Registered Vehicle</th>
+                    <th>Visit History</th>
+                    <th>Total Spent</th>
+                  </tr>
+                </thead>
+                <tbody id="adminCustomersTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 3: PRODUCTS (Product Management Interface CRUD)
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewProducts">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">Product Management & Inventory</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Add, modify pricing, edit sizes, or remove products instantly.</p>
+              </div>
+              <button class="btn btn-primary" data-modal-open="adminAddProductModal">
+                <i data-lucide="plus-circle"></i> Add New Product
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Media</th>
+                    <th>Product & Specification</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminProductsTableBodyDedicated">
+                  <!-- Synced with products table -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 4: CATEGORIES
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewCategories">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Product & Tyre Categories</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div><strong>Car Tyres</strong> (Ultra-Performance, Touring, Run-Flat)</div>
+                  <span class="badge-tag" style="margin: 0;">4 Products</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div><strong>Bike Tyres</strong> (HyperSport, Road Sport, Commuter)</div>
+                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div><strong>SUV Tyres</strong> (All-Terrain, Highway Comfort)</div>
+                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div><strong>Alloy Wheels</strong> (Forged, Flow-Formed Rims)</div>
+                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div><strong>Wheel Accessories</strong> (Digital Gauges, Care Kits)</div>
+                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 5: SERVICES (Service Management)
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewServices">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Automotive Service Offerings & Base Rates</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Service Name</th>
+                    <th>Standard Bay Duration</th>
+                    <th>Current Base Rate</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>3D Laser Wheel Alignment</strong></td>
+                    <td>45 mins</td>
+                    <td>$79.00</td>
+                    <td><span class="status-pill status-completed">Active</span></td>
+                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Dynamic Wheel Balancing</strong></td>
+                    <td>30 mins</td>
+                    <td>$49.00</td>
+                    <td><span class="status-pill status-completed">Active</span></td>
+                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Touchless Tyre Replacement</strong></td>
+                    <td>20 mins</td>
+                    <td>$29.00</td>
+                    <td><span class="status-pill status-completed">Active</span></td>
+                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Aviation Nitrogen Purge & Fill</strong></td>
+                    <td>20 mins</td>
+                    <td>$35.00</td>
+                    <td><span class="status-pill status-completed">Active</span></td>
+                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 6: APPOINTMENTS (Appointment Management)
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewAppointments">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Master Appointment Schedule</h3>
+              <button class="btn btn-sm btn-primary" onclick="window.refreshAdminAppointments(); window.showToast('Schedule re-synced', 'success');">
+                <i data-lucide="refresh-cw"></i> Refresh Data
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Customer Name</th>
+                    <th>Service & Vehicle</th>
+                    <th>Date & Slot</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminAllAppointmentsTable">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 7: PRICING PLANS
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewPricing">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Package Pricing Tiers</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-body);">
+                  <div>
+                    <strong>Basic Care Package</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Balancing, digital pressure & tread inspection</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">$49</span>
+                    <button class="action-btn-sm" onclick="window.showToast('Package rates locked', 'info');"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--secondary); background: rgba(242, 140, 40, 0.05);">
+                  <div>
+                    <strong>Standard Care Package (Popular)</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Full 3D laser alignment, rotation & nitrogen purge</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--secondary);">$99</span>
+                    <button class="action-btn-sm" onclick="window.showToast('Package rates locked', 'info');"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-body);">
+                  <div>
+                    <strong>Premium Care Package</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Road-force diagnosis, suspension check & ceramic rim coat</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">$169</span>
+                    <button class="action-btn-sm" onclick="window.showToast('Package rates locked', 'info');"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 8: REVIEWS
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewReviews">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Customer Feedback & Ratings</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <strong>Alexander Wright (5.0 / 5)</strong>
+                    <span style="color: #F59E0B;"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></span>
+                  </div>
+                  <p style="font-size: 0.92rem; margin: 0;">"Eliminated my BMW M3 highway vibration that two other shops failed to solve. Top tier work!"</p>
+                </div>
+                <div style="padding: 1.25rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <strong>Sarah Jenkins (5.0 / 5)</strong>
+                    <span style="color: #F59E0B;"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></span>
+                  </div>
+                  <p style="font-size: 0.92rem; margin: 0;">"The Hunter laser sheet was clear. Clean facility and fast turn-around."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 9: MESSAGES (From Contact Us Form)
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewMessages">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Website Contact Form Inquiries</h3>
+            </div>
+            <div class="panel-body" id="adminMessagesList">
+              <!-- Populated dynamically via js/admin.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 10: REPORTS
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewReports">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">Financial & Workshop Efficiency Reports</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="background: var(--bg-body); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">November Monthly Turnover</div>
+                  <div style="font-size: 2rem; font-family: var(--font-heading); font-weight: 700; color: var(--secondary);">$24,850</div>
+                  <div style="font-size: 0.8rem; color: var(--success); margin-top: 0.25rem;">+18.4% compared to October</div>
+                </div>
+                <div style="background: var(--bg-body); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">Tyres Sold This Month</div>
+                  <div style="font-size: 2rem; font-family: var(--font-heading); font-weight: 700;">148 units</div>
+                  <div style="font-size: 0.8rem; color: var(--success); margin-top: 0.25rem;">Michelin Pilot Sport 4S leading</div>
+                </div>
+              </div>
+              <button class="btn btn-outline" onclick="window.showToast('Generating Financial Audit PDF report...', 'info');">
+                <i data-lucide="file-text"></i> Export Comprehensive Monthly Audit (PDF)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             ADMIN VIEW 11: SETTINGS
+             ========================================================================== -->
+        <div class="dashboard-view" id="adminViewSettings">
+          <div class="panel-card" style="max-width: 800px;">
+            <div class="panel-header">
+              <h3 class="panel-title">System Settings & Workshop Config</h3>
+            </div>
+            <div class="panel-body">
+              <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div>
+                  <h5 style="margin-bottom: 0.5rem;">Workshop Hours</h5>
+                  <div class="form-grid-2">
+                    <input type="text" class="form-control" value="08:00 AM" placeholder="Opening Time">
+                    <input type="text" class="form-control" value="07:00 PM" placeholder="Closing Time">
+                  </div>
+                </div>
+                <div>
+                  <h5 style="margin-bottom: 0.5rem;">Express Bay Capacity</h5>
+                  <input type="number" class="form-control" value="4" style="max-width: 200px;">
+                </div>
+                <button class="btn btn-primary" style="width: fit-content;" onclick="window.showToast('System configuration saved!', 'success');">
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Add Product Modal (For Product CRUD) -->
+  <div class="modal-overlay" id="adminAddProductModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" aria-label="Close dialog"><i data-lucide="x"></i></button>
+      <div style="margin-bottom: 1.5rem;">
+        <div class="badge-tag">Inventory CRUD</div>
+        <h3>Add New Product to Catalog</h3>
+      </div>
+      <form id="adminAddProductForm">
+        <div class="form-group">
+          <label for="newProdName">Product Model Name *</label>
+          <input type="text" id="newProdName" class="form-control" placeholder="e.g. Michelin Pilot Sport 5" required>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="newProdBrand">Brand *</label>
+            <input type="text" id="newProdBrand" class="form-control" placeholder="e.g. Michelin / Pirelli" required>
+          </div>
+          <div class="form-group">
+            <label for="newProdCategory">Category *</label>
+            <select id="newProdCategory" class="form-control" required>
+              <option value="Car Tyres">Car Tyres</option>
+              <option value="SUV Tyres">SUV Tyres</option>
+              <option value="Bike Tyres">Bike Tyres</option>
+              <option value="Alloy Wheels">Alloy Wheels</option>
+              <option value="Wheel Accessories">Wheel Accessories</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="newProdSize">Tyre / Rim Size *</label>
+            <input type="text" id="newProdSize" class="form-control" placeholder="e.g. 245/40 R18 97Y" required>
+          </div>
+          <div class="form-group">
+            <label for="newProdPrice">Price per Unit ($) *</label>
+            <input type="number" id="newProdPrice" class="form-control" placeholder="195" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="custom-checkbox-label">
+            <input type="checkbox" id="newProdStock" checked>
+            <span>Set In-Stock Availability immediately</span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          <i data-lucide="plus"></i> Add Product to Website Catalog
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="js/theme.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

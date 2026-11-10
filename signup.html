@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TORQ Signup | Tyre & Wheel Care</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="auth-page">
+  <div class="auth-controls"><button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button><button class="control-btn rtl-toggle-btn" title="Toggle RTL"><span style="font-weight: 700; font-size: 0.8rem;">RTL</span></button></div>
+  <div class="auth-card reveal">
+    <a href="index.html" class="auth-logo"><div class="logo-mark" style="width:52px;height:52px;font-size:1.8rem;">T</div><div class="logo-title" style="font-size: 2rem; color: var(--primary);">TOR<span>Q</span></div></a>
+    <div class="auth-header"><h2>Create account</h2><p>Join TORQ and manage your vehicle care in one place.</p></div>
+    <form id="signupForm" class="auth-form"><div class="form-group"><label>Full name</label><input type="text" class="form-control" placeholder="John Smith" required></div><div class="form-group"><label>Email address</label><input type="email" class="form-control" placeholder="name@torqtyres.com" required></div><div class="form-group"><label>Phone number</label><input type="tel" class="form-control" placeholder="+1 (415) 555-0147" required></div><div class="form-group"><label>Password</label><div class="form-control-wrap"><input type="password" id="password" class="form-control" placeholder="••••••••" required><button type="button" class="toggle-password" style="background:none; border:none; position:absolute; right:1rem; top:50%; transform:translateY(-50%); color:var(--text-muted); cursor:pointer;"><i data-lucide="eye" style="width: 18px;"></i></button></div></div><div class="form-group"><label>Confirm password</label><div class="form-control-wrap"><input type="password" id="confirmPassword" class="form-control" placeholder="••••••••" required></div></div><div class="auth-options"><label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; text-align:left;"><input type="checkbox" required> I agree to the <a href="#" style="color: var(--primary);">terms</a></label></div><button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Create account</button></form>
+    <div class="auth-footer">Already registered? <a href="login.html">Sign in</a></div>
+  </div>
+  <script src="js/theme.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
