@@ -226,6 +226,21 @@
         }
       });
     });
+
+    document.querySelectorAll('[data-booking-service]').forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = document.getElementById('bookingModal');
+        const serviceSelect = modal && modal.querySelector('[name="service"], #bookingService, .input-group select');
+        if (serviceSelect) {
+          const serviceName = button.dataset.bookingService;
+          const matchingOption = Array.from(serviceSelect.options).find(option =>
+            option.textContent.trim().toLowerCase() === serviceName.toLowerCase()
+          );
+          if (matchingOption) serviceSelect.value = matchingOption.value;
+        }
+        if (window.openModal) window.openModal('bookingModal');
+      });
+    });
   }
 
   // Run on startup

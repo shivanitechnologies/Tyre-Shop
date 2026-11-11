@@ -373,11 +373,16 @@
     const params = new URLSearchParams(window.location.search);
     const requestedType = params.get('type');
     const requestedSearch = params.get('search');
+    const requestedBrand = params.get('brand');
     if (requestedType && Array.from(document.querySelectorAll('.category-filter')).some((input) => input.value === requestedType)) {
       state.categories = new Set([requestedType]);
       document.querySelectorAll('.category-filter').forEach((input) => {
         input.checked = input.value === requestedType;
       });
+    }
+    if (requestedBrand && brandSelect && Array.from(brandSelect.options).some((option) => option.value === requestedBrand)) {
+      state.brand = requestedBrand;
+      brandSelect.value = requestedBrand;
     }
     if (requestedSearch && searchInput) {
       state.search = requestedSearch;

@@ -4,7 +4,7 @@
   const MESSAGES_KEY = 'tyrex_contact_messages';
 
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('main form');
+    const form = document.querySelector('.contact-message-form');
     if (!form) return;
 
     const fields = form.querySelectorAll('input, select, textarea');
