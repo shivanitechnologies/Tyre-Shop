@@ -311,7 +311,7 @@
               <h3 class="panel-title">Customer Database</h3>
               <div class="search-input-box" style="min-width: 250px;">
                 <i data-lucide="search"></i>
-                <input type="text" placeholder="Search customer by name or phone..." oninput="/* frontend demo */">
+                <input type="text" id="adminCustomerSearch" placeholder="Search customer by name or phone...">
               </div>
             </div>
             <div class="table-responsive">
@@ -380,23 +380,23 @@
               <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                   <div><strong>Car Tyres</strong> (Ultra-Performance, Touring, Run-Flat)</div>
-                  <span class="badge-tag" style="margin: 0;">4 Products</span>
+                  <span class="badge-tag" style="margin: 0;" data-admin-category-count="car">0 Products</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                   <div><strong>Bike Tyres</strong> (HyperSport, Road Sport, Commuter)</div>
-                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                  <span class="badge-tag" style="margin: 0;" data-admin-category-count="bike">0 Products</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                   <div><strong>SUV Tyres</strong> (All-Terrain, Highway Comfort)</div>
-                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                  <span class="badge-tag" style="margin: 0;" data-admin-category-count="suv">0 Products</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                   <div><strong>Alloy Wheels</strong> (Forged, Flow-Formed Rims)</div>
-                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                  <span class="badge-tag" style="margin: 0;" data-admin-category-count="wheels">0 Products</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                   <div><strong>Wheel Accessories</strong> (Digital Gauges, Care Kits)</div>
-                  <span class="badge-tag" style="margin: 0;">2 Products</span>
+                  <span class="badge-tag" style="margin: 0;" data-admin-category-count="accessories">0 Products</span>
                 </div>
               </div>
             </div>
@@ -426,30 +426,30 @@
                   <tr>
                     <td><strong>3D Laser Wheel Alignment</strong></td>
                     <td>45 mins</td>
-                    <td>$79.00</td>
+                    <td><span data-service-rate-value="alignment">$79.00</span></td>
                     <td><span class="status-pill status-completed">Active</span></td>
-                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                    <td><button class="action-btn-sm" data-edit-service-rate="alignment" aria-label="Edit alignment rate"><i data-lucide="edit-2"></i></button></td>
                   </tr>
                   <tr>
                     <td><strong>Dynamic Wheel Balancing</strong></td>
                     <td>30 mins</td>
-                    <td>$49.00</td>
+                    <td><span data-service-rate-value="balancing">$49.00</span></td>
                     <td><span class="status-pill status-completed">Active</span></td>
-                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                    <td><button class="action-btn-sm" data-edit-service-rate="balancing" aria-label="Edit balancing rate"><i data-lucide="edit-2"></i></button></td>
                   </tr>
                   <tr>
                     <td><strong>Touchless Tyre Replacement</strong></td>
                     <td>20 mins</td>
-                    <td>$29.00</td>
+                    <td><span data-service-rate-value="fitting">$29.00</span></td>
                     <td><span class="status-pill status-completed">Active</span></td>
-                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                    <td><button class="action-btn-sm" data-edit-service-rate="fitting" aria-label="Edit fitting rate"><i data-lucide="edit-2"></i></button></td>
                   </tr>
                   <tr>
                     <td><strong>Aviation Nitrogen Purge & Fill</strong></td>
                     <td>20 mins</td>
-                    <td>$35.00</td>
+                    <td><span data-service-rate-value="nitrogen">$35.00</span></td>
                     <td><span class="status-pill status-completed">Active</span></td>
-                    <td><button class="action-btn-sm" onclick="window.showToast('Rate settings updated', 'info');"><i data-lucide="edit-2"></i></button></td>
+                    <td><button class="action-btn-sm" data-edit-service-rate="nitrogen" aria-label="Edit nitrogen service rate"><i data-lucide="edit-2"></i></button></td>
                   </tr>
                 </tbody>
               </table>
@@ -501,34 +501,34 @@
               <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-body);">
                   <div>
-                    <strong>Basic Care Package</strong>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Balancing, digital pressure & tread inspection</div>
+                    <strong>Essential Care</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Tyre inspection, balancing, and safety checks</div>
                   </div>
                   <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">$49</span>
-                    <button class="action-btn-sm" onclick="window.showToast('Package rates locked', 'info');"><i data-lucide="edit-2"></i></button>
+                    <span data-package-price-value="basic" style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">$79</span>
+                    <button class="action-btn-sm" data-edit-package-price="basic" aria-label="Edit basic package price"><i data-lucide="edit-2"></i></button>
                   </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--secondary); background: rgba(242, 140, 40, 0.05);">
                   <div>
-                    <strong>Standard Care Package (Popular)</strong>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Full 3D laser alignment, rotation & nitrogen purge</div>
+                    <strong>Performance Plus (Popular)</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Wheel alignment, rotation, and performance inspection</div>
                   </div>
                   <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--secondary);">$99</span>
-                    <button class="action-btn-sm" onclick="window.showToast('Package rates locked', 'info');"><i data-lucide="edit-2"></i></button>
+                    <span data-package-price-value="standard" style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--secondary);">$149</span>
+                    <button class="action-btn-sm" data-edit-package-price="standard" aria-label="Edit standard package price"><i data-lucide="edit-2"></i></button>
                   </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-body);">
                   <div>
-                    <strong>Premium Care Package</strong>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Road-force diagnosis, suspension check & ceramic rim coat</div>
+                    <strong>Signature Package</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Premium tyre fitment and suspension review</div>
                   </div>
                   <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">$169</span>
-                    <button class="action-btn-sm" onclick="window.showToast('Package rates locked', 'info');"><i data-lucide="edit-2"></i></button>
+                    <span data-package-price-value="premium" style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">$249</span>
+                    <button class="action-btn-sm" data-edit-package-price="premium" aria-label="Edit premium package price"><i data-lucide="edit-2"></i></button>
                   </div>
                 </div>
               </div>
@@ -590,18 +590,18 @@
             <div class="panel-body">
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                 <div style="background: var(--bg-body); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">November Monthly Turnover</div>
-                  <div style="font-size: 2rem; font-family: var(--font-heading); font-weight: 700; color: var(--secondary);">$24,850</div>
-                  <div style="font-size: 0.8rem; color: var(--success); margin-top: 0.25rem;">+18.4% compared to October</div>
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">Completed service revenue this month</div>
+                  <div id="adminReportRevenue" style="font-size: 2rem; font-family: var(--font-heading); font-weight: 700; color: var(--secondary);">$0</div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Based on completed demo bookings</div>
                 </div>
                 <div style="background: var(--bg-body); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">Tyres Sold This Month</div>
-                  <div style="font-size: 2rem; font-family: var(--font-heading); font-weight: 700;">148 units</div>
-                  <div style="font-size: 0.8rem; color: var(--success); margin-top: 0.25rem;">Michelin Pilot Sport 4S leading</div>
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">Appointments this month</div>
+                  <div id="adminReportAppointments" style="font-size: 2rem; font-family: var(--font-heading); font-weight: 700;">0</div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Scheduled services recorded locally</div>
                 </div>
               </div>
-              <button class="btn btn-outline" onclick="window.showToast('Generating Financial Audit PDF report...', 'info');">
-                <i data-lucide="file-text"></i> Export Comprehensive Monthly Audit (PDF)
+              <button class="btn btn-outline" id="adminExportReportBtn">
+                <i data-lucide="file-text"></i> Export appointment report (CSV)
               </button>
             </div>
           </div>
@@ -620,15 +620,15 @@
                 <div>
                   <h5 style="margin-bottom: 0.5rem;">Workshop Hours</h5>
                   <div class="form-grid-2">
-                    <input type="text" class="form-control" value="08:00 AM" placeholder="Opening Time">
-                    <input type="text" class="form-control" value="07:00 PM" placeholder="Closing Time">
+                    <input type="text" class="form-control" data-admin-setting="openingTime" value="08:00 AM" placeholder="Opening Time">
+                    <input type="text" class="form-control" data-admin-setting="closingTime" value="07:00 PM" placeholder="Closing Time">
                   </div>
                 </div>
                 <div>
                   <h5 style="margin-bottom: 0.5rem;">Express Bay Capacity</h5>
-                  <input type="number" class="form-control" value="4" style="max-width: 200px;">
+                  <input type="number" class="form-control" data-admin-setting="bayCapacity" value="4" min="1" style="max-width: 200px;">
                 </div>
-                <button class="btn btn-primary" style="width: fit-content;" onclick="window.showToast('System configuration saved!', 'success');">
+                <button class="btn btn-primary" id="adminSaveSettingsBtn" style="width: fit-content;">
                   Save Changes
                 </button>
               </div>

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/responsive.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="home-page">
     <header class="site-header">
       <div class="container header-container">
         <a href="index.html" class="logo">
@@ -29,13 +29,13 @@
           <a href="products.html" class="nav-link">Products</a>
           <a href="pricing.html" class="nav-link">Pricing</a>
           <a href="contact.html" class="nav-link">Contact</a>
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
+
         </nav>
 
         <div class="header-actions">
           <button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button>
           <button class="control-btn rtl-toggle-btn" title="Toggle RTL">RTL</button>
-          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a>
+          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a><a href="signup.html" class="btn btn-sm btn-outline header-cta">Sign up</a>
           <button class="btn btn-sm btn-primary header-cta" onclick="window.openModal('bookingModal')">Book a Service</button>
           <button class="hamburger-btn" aria-label="Open menu"><i data-lucide="menu"></i></button>
         </div>
@@ -60,16 +60,19 @@
         <a href="products.html" class="mobile-nav-link">Products <i data-lucide="chevron-right"></i></a>
         <a href="pricing.html" class="mobile-nav-link">Pricing <i data-lucide="chevron-right"></i></a>
         <a href="contact.html" class="mobile-nav-link">Contact <i data-lucide="chevron-right"></i></a>
-        <a href="dashboard.html" class="mobile-nav-link">Dashboard <i data-lucide="chevron-right"></i></a>
+
       </div>
       <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
         <button class="btn btn-primary" onclick="window.openModal('bookingModal')">Book a Service</button>
-        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="login.html" class="btn btn-outline">Login</a><a href="signup.html" class="btn btn-primary">Sign up</a>
       </div>
     </div>
 
   <main>
-    <section class="hero-classic" style="background-image: url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1800&q=80');">
+    <section class="hero-classic has-background-video" style="background-image: url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1800&q=80');">
+      <video class="hero-background-video" autoplay muted loop playsinline preload="metadata" poster="https://images.pexels.com/videos/14052063/lamborghini-orange-orange-car-14052063.jpeg" aria-hidden="true" tabindex="-1">
+        <source src="https://videos.pexels.com/video-files/14052063/14052063-hd_1920_1080_25fps.mp4" type="video/mp4">
+      </video>
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content reveal">
@@ -98,6 +101,77 @@
           <article class="card-surface" style="padding:1.5rem;"><div class="feature-icon" style="margin-bottom:1rem;"><i data-lucide="palette"></i></div><h3>Luxury wheel styling</h3><p style="color:var(--text-soft);">Performance and aesthetics combined for drivers who want distinction.</p></article>
         </div>
       </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="stats-grid reveal">
+          <div class="stat-card"><div class="stat-number" data-counter="12000" data-suffix="+">0</div><div class="stat-label">Vehicles cared for</div></div>
+          <div class="stat-card"><div class="stat-number" data-counter="18" data-suffix="+">0</div><div class="stat-label">Years of experience</div></div>
+          <div class="stat-card"><div class="stat-number" data-counter="98" data-suffix="%">0</div><div class="stat-label">Customer satisfaction</div></div>
+          <div class="stat-card"><div class="stat-number" data-counter="40" data-suffix=" min">0</div><div class="stat-label">Average fitting time</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Precision technology</span><h2>Better measurements. More confident decisions.</h2><p>We use the right checks for the concern at hand, then walk you through the findings before recommending service.</p></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.5rem;"><div class="feature-icon"><i data-lucide="scan-line"></i></div><h3>Alignment diagnostics</h3><p>Review wheel angles against the correct vehicle specifications to identify setup concerns.</p></article>
+          <article class="card-surface" style="padding:1.5rem;"><div class="feature-icon"><i data-lucide="activity"></i></div><h3>Road-force testing</h3><p>Investigate persistent vibration with a more detailed tyre and wheel assembly check.</p></article>
+          <article class="card-surface" style="padding:1.5rem;"><div class="feature-icon"><i data-lucide="badge-check"></i></div><h3>Clear service report</h3><p>Understand what we measured, what we adjusted, and what may need attention later.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Tyre finder</span><h2>Start with your vehicle type.</h2><p>Choose a category to see matching TORQ collection options. Confirm exact fitment with our team before purchase.</p></div>
+        <form id="homeTyreFinder" class="card-surface reveal" style="padding:1.5rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; align-items:end;">
+          <div class="input-group"><label for="finderType">Vehicle type</label><select id="finderType" name="type"><option value="car">Car</option><option value="bike">Motorcycle</option><option value="suv">SUV</option></select></div>
+          <div class="input-group"><label for="finderSize">Tyre size (optional)</label><input id="finderSize" name="search" type="text" placeholder="e.g. 225/45 R17"></div>
+          <button class="btn btn-primary" type="submit">Find products</button>
+        </form>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Featured products</span><h2>Selected for performance and fit.</h2></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1rem;"><img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80" alt="Performance car tyre" style="width:100%;height:190px;object-fit:cover;border-radius:14px;"><div style="padding:0.75rem 0.5rem;"><span class="eyebrow">Michelin · Car</span><h3>Velocity Pro R-S</h3><p>High-grip performance tyre · from $289</p><a class="link-arrow" href="products.html?type=car&amp;search=Velocity%20Pro">View product <i data-lucide="arrow-right"></i></a></div></article>
+          <article class="card-surface" style="padding:1rem;"><img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=800&q=80" alt="SUV tyre and vehicle" style="width:100%;height:190px;object-fit:cover;border-radius:14px;"><div style="padding:0.75rem 0.5rem;"><span class="eyebrow">Continental · SUV</span><h3>TrailEdge SUV Pro</h3><p>Road-ready SUV tyre · from $324</p><a class="link-arrow" href="products.html?type=suv&amp;search=TrailEdge">View product <i data-lucide="arrow-right"></i></a></div></article>
+          <article class="card-surface" style="padding:1rem;"><img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?auto=format&fit=crop&w=800&q=80" alt="Alloy wheel" style="width:100%;height:190px;object-fit:cover;border-radius:14px;"><div style="padding:0.75rem 0.5rem;"><span class="eyebrow">TORQ · Alloy wheel</span><h3>Forged Track Alloy</h3><p>Lightweight wheel upgrade · from $429</p><a class="link-arrow" href="products.html?type=wheels&amp;search=Forged%20Track">View product <i data-lucide="arrow-right"></i></a></div></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="info-grid reveal">
+          <div><span class="eyebrow">Before & after</span><h2>Small corrections can change the drive.</h2><p style="color:var(--text-soft);">A vehicle arriving with uneven wear or steering pull may benefit from a geometry check. After inspection and any approved adjustment, we share the results so you can see what changed.</p><a class="link-arrow" href="services.html">Explore alignment service <i data-lucide="arrow-right"></i></a></div>
+          <div class="card-surface" style="padding:1.5rem;"><div class="showcase-grid"><div><span class="eyebrow">Before</span><h3>Uneven wear</h3><p>Shoulder wear, steering pull, or vibration can signal an issue worth checking.</p></div><div><span class="eyebrow">After inspection</span><h3>Measured & explained</h3><p>We review vehicle specifications, discuss options, and confirm completed adjustments.</p></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header reveal text-center mx-auto"><span class="eyebrow">Client reviews</span><h2>Expert care, without the guesswork.</h2></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.5rem;"><div class="product-rating">★★★★★ <span>5.0</span></div><p>“A thorough inspection and a clear explanation of the alignment work. The car feels settled again.”</p><strong>— TORQ customer</strong></article>
+          <article class="card-surface" style="padding:1.5rem;"><div class="product-rating">★★★★★ <span>5.0</span></div><p>“Helpful tyre recommendations for my SUV and a tidy, professional fitting.”</p><strong>— TORQ customer</strong></article>
+          <article class="card-surface" style="padding:1.5rem;"><div class="product-rating">★★★★★ <span>5.0</span></div><p>“They diagnosed the vibration instead of guessing. Great communication throughout.”</p><strong>— TORQ customer</strong></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Care packages</span><h2>Choose a starting point for your visit.</h2></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.5rem;"><h3>Essential Care</h3><div class="product-price">$79</div><p>Inspection, balancing, and a safety check.</p><button class="btn btn-outline" type="button" onclick="window.openModal('bookingModal')">Book a visit</button></article>
+          <article class="card-surface" style="padding:1.5rem;"><h3>Performance Plus</h3><div class="product-price">$149</div><p>Alignment, rotation, and performance inspection.</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book a visit</button></article>
+          <article class="card-surface" style="padding:1.5rem;"><h3>Signature Package</h3><div class="product-price">$249</div><p>Premium fitment support and suspension review.</p><button class="btn btn-outline" type="button" onclick="window.openModal('bookingModal')">Book a visit</button></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container text-center reveal"><span class="eyebrow">Personal service</span><h2>Make your next visit a little more precise.</h2><p>Tell us what you drive and what you’ve noticed. We’ll take it from there.</p><button class="btn btn-primary btn-lg" type="button" onclick="window.openModal('bookingModal')">Schedule service</button></div>
     </section>
   </main>
     <footer class="footer">
@@ -133,7 +207,7 @@
             <ul class="footer-links">
               <li><a href="contact.html">Contact</a></li>
               <li><a href="products.html">Tyre collection</a></li>
-              <li><a href="dashboard.html">Service dashboard</a></li>
+
               <li><a href="login.html">Account login</a></li>
             </ul>
           </div>
@@ -163,23 +237,27 @@
           <button class="modal-close-btn" aria-label="Close booking form"><i data-lucide="x"></i></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form class="appointment-booking-form">
             <div class="form-grid">
               <div class="input-group">
                 <label>Full name</label>
-                <input type="text" placeholder="Your name">
+                <input type="text" name="name" placeholder="Your name" required>
+              </div>
+              <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="name@example.com" required>
               </div>
               <div class="input-group">
                 <label>Phone</label>
-                <input type="tel" placeholder="(555) 555-1234">
+                <input type="tel" name="phone" placeholder="(555) 555-1234" required>
               </div>
               <div class="input-group">
                 <label>Vehicle</label>
-                <input type="text" placeholder="BMW 3 Series">
+                <input type="text" name="vehicle" placeholder="BMW 3 Series">
               </div>
               <div class="input-group">
                 <label>Service</label>
-                <select>
+                <select name="service">
                   <option>Wheel alignment</option>
                   <option>Tyre replacement</option>
                   <option>Brake inspection</option>
@@ -188,7 +266,7 @@
               </div>
             </div>
             <div class="form-actions">
-              <button class="btn btn-primary" type="button">Confirm request</button>
+              <button class="btn btn-primary" type="submit">Confirm request</button>
             </div>
           </form>
         </div>
@@ -206,6 +284,8 @@
     </div>
 
   <script src="js/theme.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/public-pricing.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

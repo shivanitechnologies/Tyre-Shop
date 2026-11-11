@@ -26,11 +26,23 @@
     const resolved = dir === 'rtl' ? 'rtl' : 'ltr';
     document.documentElement.setAttribute('dir', resolved);
     localStorage.setItem(DIR_KEY, resolved);
+
+    document.querySelectorAll('.rtl-toggle-btn').forEach((btn) => {
+      btn.dataset.direction = resolved;
+      btn.setAttribute('aria-pressed', String(resolved === 'rtl'));
+      btn.textContent = resolved === 'rtl' ? 'LTR' : 'RTL';
+      btn.setAttribute(
+        'aria-label',
+        `Text direction: ${resolved === 'rtl' ? 'right to left' : 'left to right'}. Switch to ${resolved === 'rtl' ? 'left to right' : 'right to left'}.`
+      );
+      btn.title = `Switch to ${resolved === 'rtl' ? 'LTR' : 'RTL'}`;
+    });
   }
 
   function initThemeControls() {
     const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
     const savedDir = localStorage.getItem(DIR_KEY) || 'ltr';
+
     setTheme(savedTheme);
     setDirection(savedDir);
 

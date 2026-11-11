@@ -29,13 +29,13 @@
           <a href="products.html" class="nav-link">Products</a>
           <a href="pricing.html" class="nav-link">Pricing</a>
           <a href="contact.html" class="nav-link">Contact</a>
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
+
         </nav>
 
         <div class="header-actions">
           <button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button>
           <button class="control-btn rtl-toggle-btn" title="Toggle RTL">RTL</button>
-          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a>
+          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a><a href="signup.html" class="btn btn-sm btn-outline header-cta">Sign up</a>
           <button class="btn btn-sm btn-primary header-cta" onclick="window.openModal('bookingModal')">Book a Service</button>
           <button class="hamburger-btn" aria-label="Open menu"><i data-lucide="menu"></i></button>
         </div>
@@ -60,11 +60,11 @@
         <a href="products.html" class="mobile-nav-link">Products <i data-lucide="chevron-right"></i></a>
         <a href="pricing.html" class="mobile-nav-link">Pricing <i data-lucide="chevron-right"></i></a>
         <a href="contact.html" class="mobile-nav-link">Contact <i data-lucide="chevron-right"></i></a>
-        <a href="dashboard.html" class="mobile-nav-link">Dashboard <i data-lucide="chevron-right"></i></a>
+
       </div>
       <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
         <button class="btn btn-primary" onclick="window.openModal('bookingModal')">Book a Service</button>
-        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="login.html" class="btn btn-outline">Login</a><a href="signup.html" class="btn btn-primary">Sign up</a>
       </div>
     </div>
 
@@ -76,9 +76,24 @@
     <section class="section-padding">
       <div class="container">
         <div class="service-grid reveal">
-          <article class="service-card"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Wheel alignment service"><div class="content"><h3>Wheel alignment</h3><p>Correct uneven tyre wear, improve steering feel, and boost efficiency with a detailed alignment check.</p></div></article>
-          <article class="service-card"><img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=800&q=80" alt="Tyre replacement service"><div class="content"><h3>Tyre fitting</h3><p>Professional installation with balanced fitment for city traffic, long motorway drives, and summer performance.</p></div></article>
-          <article class="service-card"><img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80" alt="Suspension service"><div class="content"><h3>Suspension tuning</h3><p>Restore ride quality and confidence with inspections and adjustment work for shocks, springs, and geometry.</p></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Wheel alignment service"><div class="content"><h3>3D wheel alignment</h3><p>Correct uneven tyre wear, improve steering feel, and boost efficiency with a detailed geometry check.</p><p><strong>From $79</strong> · Typically 45 minutes</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book alignment</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=800&q=80" alt="Tyre replacement service"><div class="content"><h3>Tyre fitting & replacement</h3><p>Professional installation with balanced fitment for daily drives, long trips, and performance use.</p><p><strong>From $29 per tyre</strong> · Typically 20 minutes</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book tyre fitting</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80" alt="Wheel balancing service"><div class="content"><h3>Wheel balancing</h3><p>Reduce steering vibration and protect tread life with precision dynamic balancing.</p><p><strong>From $49</strong> · Typically 30 minutes</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book balancing</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80" alt="Tyre inspection and rotation"><div class="content"><h3>Tyre inspection & rotation</h3><p>Check pressure, tread depth, and wear patterns, then rotate where your vehicle allows.</p><p><strong>From $35</strong> · Typically 30 minutes</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book inspection</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" alt="Puncture repair"><div class="content"><h3>Puncture repair</h3><p>Assess repairability and restore safe service when the tyre condition and puncture location permit.</p><p><strong>From $25</strong> · Inspection required</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Request inspection</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80" alt="Nitrogen tyre inflation"><div class="content"><h3>Nitrogen inflation</h3><p>Set tyre pressure to your vehicle specification and check for leaks before inflation.</p><p><strong>From $35</strong> · Typically 20 minutes</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book inflation</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=800&q=80" alt="Alloy wheel care"><div class="content"><h3>Alloy wheel inspection</h3><p>Review wheel condition, fitment, and visible damage before your next tyre upgrade.</p><p><strong>From $39</strong> · Quote after inspection</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book inspection</button></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80" alt="Suspension and steering inspection"><div class="content"><h3>Suspension & steering check</h3><p>Investigate handling concerns and inspect steering and suspension components for visible wear.</p><p><strong>From $59</strong> · Typically 45 minutes</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Book inspection</button></div></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="section-header reveal text-center mx-auto"><span class="eyebrow">Our process</span><h2>Clear advice, careful fitment, no guesswork.</h2></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.5rem;"><span class="eyebrow">01 · Assess</span><h3>Start with your vehicle</h3><p>We confirm fitment, inspect the concern, and explain the options before work begins.</p></article>
+          <article class="card-surface" style="padding:1.5rem;"><span class="eyebrow">02 · Service</span><h3>Precision workshop care</h3><p>Our technicians complete the agreed work using the appropriate equipment and specifications.</p></article>
+          <article class="card-surface" style="padding:1.5rem;"><span class="eyebrow">03 · Review</span><h3>Leave with confidence</h3><p>We review the completed service and share practical guidance for your next check.</p></article>
         </div>
       </div>
     </section>
@@ -116,7 +131,7 @@
             <ul class="footer-links">
               <li><a href="contact.html">Contact</a></li>
               <li><a href="products.html">Tyre collection</a></li>
-              <li><a href="dashboard.html">Service dashboard</a></li>
+
               <li><a href="login.html">Account login</a></li>
             </ul>
           </div>
@@ -189,6 +204,8 @@
     </div>
 
   <script src="js/theme.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/public-pricing.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

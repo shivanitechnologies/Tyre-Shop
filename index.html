@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/responsive.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="home-page">
     <header class="site-header">
       <div class="container header-container">
         <a href="index.html" class="logo">
@@ -29,13 +29,13 @@
           <a href="products.html" class="nav-link">Products</a>
           <a href="pricing.html" class="nav-link">Pricing</a>
           <a href="contact.html" class="nav-link">Contact</a>
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
+
         </nav>
 
         <div class="header-actions">
           <button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button>
           <button class="control-btn rtl-toggle-btn" title="Toggle RTL">RTL</button>
-          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a>
+          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a><a href="signup.html" class="btn btn-sm btn-outline header-cta">Sign up</a>
           <button class="btn btn-sm btn-primary header-cta" onclick="window.openModal('bookingModal')">Book a Service</button>
           <button class="hamburger-btn" aria-label="Open menu"><i data-lucide="menu"></i></button>
         </div>
@@ -60,16 +60,19 @@
         <a href="products.html" class="mobile-nav-link">Products <i data-lucide="chevron-right"></i></a>
         <a href="pricing.html" class="mobile-nav-link">Pricing <i data-lucide="chevron-right"></i></a>
         <a href="contact.html" class="mobile-nav-link">Contact <i data-lucide="chevron-right"></i></a>
-        <a href="dashboard.html" class="mobile-nav-link">Dashboard <i data-lucide="chevron-right"></i></a>
+
       </div>
       <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
         <button class="btn btn-primary" onclick="window.openModal('bookingModal')">Book a Service</button>
-        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="login.html" class="btn btn-outline">Login</a><a href="signup.html" class="btn btn-primary">Sign up</a>
       </div>
     </div>
 
   <main>
-    <section class="hero-classic" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80');">
+    <section class="hero-classic has-background-video" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80');">
+      <video class="hero-background-video" autoplay muted loop playsinline preload="metadata" poster="https://images.pexels.com/videos/16815345/pexels-photo-16815345.jpeg" aria-hidden="true" tabindex="-1">
+        <source src="https://videos.pexels.com/video-files/16815345/16815345-uhd_2732_1144_24fps.mp4" type="video/mp4">
+      </video>
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content reveal">
@@ -139,6 +142,57 @@
         </div>
       </div>
     </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="info-grid reveal">
+          <div><span class="eyebrow">About TORQ</span><h2>Good service starts with straightforward advice.</h2><p style="color:var(--text-soft);">We help drivers choose tyres and workshop care that suit their vehicle, driving conditions, and budget. Every recommendation starts with a careful inspection.</p><a href="about.html" class="link-arrow">Our approach <i data-lucide="arrow-right"></i></a></div>
+          <div class="card-surface" style="padding:1.5rem;"><h3>How we keep you moving</h3><div class="feature-list"><div class="feature-item"><div class="feature-icon"><i data-lucide="search-check"></i></div><div><h4>Inspect</h4><p>We check fitment, wear, and the concern you brought in.</p></div></div><div class="feature-item"><div class="feature-icon"><i data-lucide="wrench"></i></div><div><h4>Explain</h4><p>You get clear options and pricing before work begins.</p></div></div><div class="feature-item"><div class="feature-icon"><i data-lucide="check-circle"></i></div><div><h4>Verify</h4><p>We review the work and answer questions before you leave.</p></div></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Featured products</span><h2>Selected for your next drive.</h2><p>Explore a few picks from the TORQ collection, then confirm your vehicle’s exact fitment with our team.</p></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1rem;"><img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80" alt="Performance car tyre" style="width:100%;height:190px;object-fit:cover;border-radius:14px;"><div style="padding:0.75rem 0.5rem;"><span class="eyebrow">Michelin · Car</span><h3>Velocity Pro R-S</h3><p>High-grip performance tyre · from $289</p><a class="link-arrow" href="products.html?type=car&amp;search=Velocity%20Pro">View product <i data-lucide="arrow-right"></i></a></div></article>
+          <article class="card-surface" style="padding:1rem;"><img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=800&q=80" alt="SUV tyre and vehicle" style="width:100%;height:190px;object-fit:cover;border-radius:14px;"><div style="padding:0.75rem 0.5rem;"><span class="eyebrow">Continental · SUV</span><h3>TrailEdge SUV Pro</h3><p>Road-ready SUV tyre · from $324</p><a class="link-arrow" href="products.html?type=suv&amp;search=TrailEdge">View product <i data-lucide="arrow-right"></i></a></div></article>
+          <article class="card-surface" style="padding:1rem;"><img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80" alt="Motorcycle" style="width:100%;height:190px;object-fit:cover;border-radius:14px;"><div style="padding:0.75rem 0.5rem;"><span class="eyebrow">Pirelli · Motorcycle</span><h3>StreetSport Bike R</h3><p>Responsive road tyre · from $132</p><a class="link-arrow" href="products.html?type=bike&amp;search=StreetSport">View product <i data-lucide="arrow-right"></i></a></div></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header reveal text-center mx-auto"><span class="eyebrow">Driver feedback</span><h2>Confidence built one visit at a time.</h2></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.5rem;"><div class="product-rating">★★★★★ <span>5.0</span></div><p>“The team explained the alignment report and got my steering feeling right again.”</p><strong>— TORQ customer</strong></article>
+          <article class="card-surface" style="padding:1.5rem;"><div class="product-rating">★★★★★ <span>5.0</span></div><p>“Quick fitting, clear pricing, and helpful advice on choosing the right tyres.”</p><strong>— TORQ customer</strong></article>
+          <article class="card-surface" style="padding:1.5rem;"><div class="product-rating">★★★★★ <span>5.0</span></div><p>“Professional service from booking through collection. I knew exactly what was done.”</p><strong>— TORQ customer</strong></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Service plans</span><h2>Know the starting point before you book.</h2></div>
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.5rem;"><h3>Essential Care</h3><div class="product-price">$79</div><p>Tyre inspection, balancing, and a safety check.</p><a class="btn btn-outline" href="pricing.html">Plan details</a></article>
+          <article class="card-surface" style="padding:1.5rem;"><h3>Performance Plus</h3><div class="product-price">$149</div><p>Alignment, rotation, and performance inspection.</p><a class="btn btn-primary" href="pricing.html">Plan details</a></article>
+          <article class="card-surface" style="padding:1.5rem;"><h3>Signature Package</h3><div class="product-price">$249</div><p>Premium fitment support and a suspension review.</p><a class="btn btn-outline" href="pricing.html">Plan details</a></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header reveal text-center mx-auto"><span class="eyebrow">Quick answers</span><h2>Before you visit</h2></div>
+        <div class="faq-container reveal">
+          <div class="faq-item"><button class="faq-question-btn" type="button"><span>Can I book a same-day tyre fitting?</span><span class="faq-icon-arrow"><i data-lucide="chevron-down"></i></span></button><div class="faq-answer">Same-day fitting may be available depending on your tyre size, stock, and workshop schedule. Contact us to confirm.</div></div>
+          <div class="faq-item"><button class="faq-question-btn" type="button"><span>What details should I bring?</span><span class="faq-icon-arrow"><i data-lucide="chevron-down"></i></span></button><div class="faq-answer">Your vehicle make, model, year, and current tyre size help us confirm fitment and prepare an accurate recommendation.</div></div>
+          <div class="faq-item"><button class="faq-question-btn" type="button"><span>Do I need an alignment after new tyres?</span><span class="faq-icon-arrow"><i data-lucide="chevron-down"></i></span></button><div class="faq-answer">An alignment check is recommended when tyres wear unevenly, steering pulls, or suspension work has been completed.</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container text-center reveal"><span class="eyebrow">Ready when you are</span><h2>Let’s get your vehicle road-ready.</h2><p>Tell us what you drive and what you need. We’ll help you choose the next step.</p><button class="btn btn-primary btn-lg" type="button" onclick="window.openModal('bookingModal')">Book an appointment</button> <a class="btn btn-outline btn-lg" href="contact.html">Ask a question</a></div>
+    </section>
   </main>
     <footer class="footer">
       <div class="container">
@@ -173,7 +227,7 @@
             <ul class="footer-links">
               <li><a href="contact.html">Contact</a></li>
               <li><a href="products.html">Tyre collection</a></li>
-              <li><a href="dashboard.html">Service dashboard</a></li>
+
               <li><a href="login.html">Account login</a></li>
             </ul>
           </div>
@@ -203,23 +257,27 @@
           <button class="modal-close-btn" aria-label="Close booking form"><i data-lucide="x"></i></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form class="appointment-booking-form">
             <div class="form-grid">
               <div class="input-group">
                 <label>Full name</label>
-                <input type="text" placeholder="Your name">
+                <input type="text" name="name" placeholder="Your name" required>
+              </div>
+              <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="name@example.com" required>
               </div>
               <div class="input-group">
                 <label>Phone</label>
-                <input type="tel" placeholder="(555) 555-1234">
+                <input type="tel" name="phone" placeholder="(555) 555-1234" required>
               </div>
               <div class="input-group">
                 <label>Vehicle</label>
-                <input type="text" placeholder="BMW 3 Series">
+                <input type="text" name="vehicle" placeholder="BMW 3 Series">
               </div>
               <div class="input-group">
                 <label>Service</label>
-                <select>
+                <select name="service">
                   <option>Wheel alignment</option>
                   <option>Tyre replacement</option>
                   <option>Brake inspection</option>
@@ -228,7 +286,7 @@
               </div>
             </div>
             <div class="form-actions">
-              <button class="btn btn-primary" type="button">Confirm request</button>
+              <button class="btn btn-primary" type="submit">Confirm request</button>
             </div>
           </form>
         </div>
@@ -246,6 +304,8 @@
     </div>
 
   <script src="js/theme.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/public-pricing.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

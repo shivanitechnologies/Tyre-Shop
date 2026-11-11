@@ -256,11 +256,16 @@ html[data-theme='light'] .site-header {
 }
 .rtl-toggle-btn {
   width: auto;
-  padding: 0 0.9rem;
+  min-width: 48px;
+  padding: 0 0.8rem;
   font-size: 0.76rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.rtl-toggle-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 .btn {
@@ -387,6 +392,21 @@ html[dir='rtl'] .mobile-nav-drawer.open {
   position: absolute;
   inset: 0;
   background: linear-gradient(100deg, rgba(9, 15, 20, 0.82), rgba(9, 15, 20, 0.46));
+}
+.hero-background-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-classic.has-background-video::before {
+  z-index: 1;
+}
+.hero-classic.has-background-video .container {
+  z-index: 2;
 }
 .hero-classic .container,
 .page-hero .container {
@@ -911,7 +931,7 @@ html[dir='rtl'] .toggle-password {
 .reveal {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition: opacity 0.55s ease var(--reveal-delay, 0ms), transform 0.55s ease var(--reveal-delay, 0ms);
 }
 .reveal.visible {
   opacity: 1;
@@ -1105,6 +1125,14 @@ html[dir='rtl'] .scroll-progress {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .hero-classic {
+    animation: none;
+  }
+
+  .hero-background-video {
+    display: none;
   }
 }
 

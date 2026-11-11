@@ -28,12 +28,12 @@
         <a href="products.html" class="nav-link active">Products</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
         <a href="contact.html" class="nav-link">Contact</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
+
       </nav>
       <div class="header-actions">
         <button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button>
         <button class="control-btn rtl-toggle-btn" title="Toggle RTL">RTL</button>
-        <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a>
+        <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a><a href="signup.html" class="btn btn-sm btn-outline header-cta">Sign up</a>
         <button class="btn btn-sm btn-primary header-cta" onclick="window.openModal('bookingModal')">Book a Service</button>
         <button class="hamburger-btn" aria-label="Open menu"><i data-lucide="menu"></i></button>
       </div>
@@ -54,11 +54,11 @@
       <a href="products.html" class="mobile-nav-link active">Products <i data-lucide="chevron-right"></i></a>
       <a href="pricing.html" class="mobile-nav-link">Pricing <i data-lucide="chevron-right"></i></a>
       <a href="contact.html" class="mobile-nav-link">Contact <i data-lucide="chevron-right"></i></a>
-      <a href="dashboard.html" class="mobile-nav-link">Dashboard <i data-lucide="chevron-right"></i></a>
+
     </div>
     <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
       <button class="btn btn-primary" onclick="window.openModal('bookingModal')">Book a Service</button>
-      <a href="login.html" class="btn btn-outline">Login</a>
+      <a href="login.html" class="btn btn-outline">Login</a><a href="signup.html" class="btn btn-primary">Sign up</a>
     </div>
   </div>
 
@@ -87,12 +87,18 @@
             <div style="margin-bottom:2rem;">
               <h4 style="margin:0 0 1rem; font-size:1.1rem;">Category</h4>
               <div style="display:grid; gap:0.75rem; color:var(--text-soft);">
-                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="performance" checked> Performance</label>
-                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="all-season" checked> All-season</label>
-                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="suv" checked> SUV</label>
-                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="winter" checked> Winter</label>
-                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="accessories" checked> Accessories</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="car" checked> Car tyres</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="bike" checked> Bike tyres</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="suv" checked> SUV tyres</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="wheels" checked> Alloy wheels</label>
+                <label style="display:flex; align-items:center; gap:0.7rem;"><input type="checkbox" class="category-filter" value="accessories" checked> Wheel accessories</label>
               </div>
+            </div>
+            <div style="margin-bottom:2rem;">
+              <h4 style="margin:0 0 1rem; font-size:1.1rem;">Brand</h4>
+              <select id="productBrand" style="width:100%; padding:0.9rem 1rem; border:1px solid var(--border-color); border-radius:12px; background:var(--panel-soft); color:var(--text-main);">
+                <option value="all">All brands</option>
+              </select>
             </div>
             <div style="margin-bottom:2rem;">
               <h4 style="margin:0 0 1rem; font-size:1.1rem;">Max price</h4>
@@ -151,7 +157,7 @@
           <ul class="footer-links">
             <li><a href="contact.html">Contact</a></li>
             <li><a href="products.html">Tyre collection</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
+
             <li><a href="login.html">Login</a></li>
           </ul>
         </div>
@@ -172,7 +178,7 @@
   <div class="modal-overlay" id="bookingModal"><div class="modal-card"><div class="modal-header"><h3 class="modal-title">Book a service</h3><button class="modal-close-btn"><i data-lucide="x"></i></button></div><div class="modal-body"><form><div class="form-grid"><div class="input-group"><label>Full name</label><input type="text" placeholder="Your name"></div><div class="input-group"><label>Phone</label><input type="tel" placeholder="(555) 555-1234"></div><div class="input-group"><label>Vehicle</label><input type="text" placeholder="BMW 3 Series"></div><div class="input-group"><label>Service</label><select><option>Wheel alignment</option><option>Tyre replacement</option><option>Brake inspection</option><option>Suspension tuning</option></select></div></div><div class="form-actions"><button class="btn btn-primary" type="button">Confirm request</button></div></form></div></div></div>
   <div class="modal-overlay" id="productModal"><div class="modal-card"><div class="modal-header"><h3 class="modal-title">Tyre details</h3><button class="modal-close-btn" aria-label="Close details"><i data-lucide="x"></i></button></div><div class="modal-body" id="productDetailContent"></div></div></div>
 
-  <script src="js/theme.js"></script>
+  <script src="js/theme.js"></script><script src="js/booking.js"></script>
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
 </body>

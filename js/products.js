@@ -6,6 +6,7 @@
       id: 1,
       name: 'Velocity Pro R-S',
       brand: 'Michelin',
+      type: 'car',
       category: 'performance',
       price: 289,
       size: '225/40 R18',
@@ -19,6 +20,7 @@
       id: 2,
       name: 'Apex All-Season X',
       brand: 'Bridgestone',
+      type: 'car',
       category: 'all-season',
       price: 214,
       size: '205/55 R16',
@@ -32,6 +34,7 @@
       id: 3,
       name: 'TrailEdge SUV Pro',
       brand: 'Continental',
+      type: 'suv',
       category: 'suv',
       price: 324,
       size: '245/60 R18',
@@ -45,6 +48,7 @@
       id: 4,
       name: 'PolarGrip Winter',
       brand: 'Pirelli',
+      type: 'car',
       category: 'winter',
       price: 268,
       size: '225/45 R17',
@@ -58,6 +62,7 @@
       id: 5,
       name: 'Torque Wheel Kit',
       brand: 'TORQ',
+      type: 'wheels',
       category: 'accessories',
       price: 149,
       size: '18-inch set',
@@ -71,6 +76,7 @@
       id: 6,
       name: 'CityRun Touring',
       brand: 'Goodyear',
+      type: 'car',
       category: 'all-season',
       price: 196,
       size: '215/55 R17',
@@ -79,22 +85,117 @@
       badge: 'Daily drive',
       inStock: true,
       description: 'Comfort-first touring tyre tuned for smooth daily commutes, low noise, and better fuel efficiency.'
+    },
+    {
+      id: 7,
+      name: 'StreetSport Bike R',
+      brand: 'Pirelli',
+      type: 'bike',
+      category: 'performance',
+      price: 132,
+      size: '120/70 ZR17',
+      rating: 4.8,
+      image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80',
+      badge: 'Motorcycle',
+      inStock: true,
+      description: 'Responsive road tyre for confident cornering, predictable wet grip, and everyday sport riding.'
+    },
+    {
+      id: 8,
+      name: 'Forged Track Alloy',
+      brand: 'TORQ',
+      type: 'wheels',
+      category: 'accessories',
+      price: 429,
+      size: '19 × 8.5 inch',
+      rating: 4.9,
+      image: 'https://images.unsplash.com/photo-1507136566006-cfc505b114fc?auto=format&fit=crop&w=900&q=80',
+      badge: 'Forged alloy',
+      inStock: true,
+      description: 'Lightweight forged alloy wheel with a durable finish and fitment options for performance vehicles.'
+    },
+    {
+      id: 9,
+      name: 'Trail SUV All-Terrain',
+      brand: 'Goodyear',
+      type: 'suv',
+      category: 'all-season',
+      price: 298,
+      size: '265/65 R17',
+      rating: 4.7,
+      image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80',
+      badge: 'All-terrain',
+      inStock: true,
+      description: 'An SUV tyre balancing road comfort with dependable traction across mixed terrain.'
+    },
+    {
+      id: 10,
+      name: 'Digital Tyre Gauge',
+      brand: 'TORQ',
+      type: 'accessories',
+      category: 'accessories',
+      price: 39,
+      size: 'Digital display',
+      rating: 4.6,
+      image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=900&q=80',
+      badge: 'Workshop essential',
+      inStock: true,
+      description: 'A clear digital pressure gauge to help keep your tyres within the recommended pressure range.'
     }
   ];
+
+  const PRODUCTS_KEY = 'torq_products';
+  let catalog = products;
 
   const state = {
     search: '',
     maxPrice: 600,
-    categories: new Set(['performance', 'all-season', 'suv', 'winter', 'accessories']),
+    categories: new Set(['car', 'bike', 'suv', 'wheels', 'accessories']),
+    brand: 'all',
     sort: 'featured'
   };
 
+  function loadProducts() {
+    try {
+      const saved = localStorage.getItem(PRODUCTS_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) catalog = parsed;
+      } else {
+        localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+      }
+    } catch (error) {
+      console.error('Could not load the saved TORQ product catalog.', error);
+      catalog = products;
+    }
+  }
+
+  function saveProducts(nextProducts) {
+    catalog = nextProducts;
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(catalog));
+    renderBrandOptions();
+    renderProducts();
+  }
+
+  function renderBrandOptions() {
+    const select = document.getElementById('productBrand');
+    if (!select) return;
+    const selectedBrand = state.brand;
+    const brands = Array.from(new Set(catalog.map((product) => product.brand))).sort();
+    select.innerHTML = '<option value="all">All brands</option>' + brands.map((brand) =>
+      `<option value="${brand}">${brand}</option>`
+    ).join('');
+    select.value = brands.includes(selectedBrand) ? selectedBrand : 'all';
+    state.brand = select.value;
+  }
+
   function getVisibleProducts() {
-    let filtered = products.filter((product) => {
+    let filtered = catalog.filter((product) => {
       const matchesSearch = !state.search || [product.name, product.brand, product.size, product.category].join(' ').toLowerCase().includes(state.search.toLowerCase());
-      const matchesCategory = state.categories.has(product.category);
+      const matchesCategory = state.categories.has(product.type || 'car');
       const matchesPrice = product.price <= state.maxPrice;
-      return matchesSearch && matchesCategory && matchesPrice;
+      const matchesBrand = state.brand === 'all' || product.brand === state.brand;
+      return matchesSearch && matchesCategory && matchesPrice && matchesBrand;
     });
 
     if (state.sort === 'low') {
@@ -161,7 +262,7 @@
 
     document.querySelectorAll('.product-details-btn').forEach((button) => {
       button.addEventListener('click', () => {
-        const product = products.find((item) => item.id === Number(button.dataset.productId));
+        const product = catalog.find((item) => String(item.id) === button.dataset.productId);
         if (!product) return;
         const detailContent = document.getElementById('productDetailContent');
         if (!detailContent) return;
@@ -203,18 +304,21 @@
   function resetFilters() {
     state.search = '';
     state.maxPrice = 600;
-    state.categories = new Set(['performance', 'all-season', 'suv', 'winter', 'accessories']);
+    state.categories = new Set(['car', 'bike', 'suv', 'wheels', 'accessories']);
     state.sort = 'featured';
+    state.brand = 'all';
 
     const searchInput = document.getElementById('productSearch');
     const priceRange = document.getElementById('priceRange');
     const priceValue = document.getElementById('priceValue');
     const sortSelect = document.getElementById('productSort');
+    const brandSelect = document.getElementById('productBrand');
 
     if (searchInput) searchInput.value = '';
     if (priceRange) priceRange.value = '600';
     if (priceValue) priceValue.textContent = '$600';
     if (sortSelect) sortSelect.value = 'featured';
+    if (brandSelect) brandSelect.value = 'all';
     document.querySelectorAll('.category-filter').forEach((checkbox) => {
       checkbox.checked = true;
     });
@@ -227,6 +331,7 @@
     const priceRange = document.getElementById('priceRange');
     const priceValue = document.getElementById('priceValue');
     const sortSelect = document.getElementById('productSort');
+    const brandSelect = document.getElementById('productBrand');
 
     if (searchInput) {
       searchInput.addEventListener('input', (event) => {
@@ -250,6 +355,13 @@
       });
     }
 
+    if (brandSelect) {
+      brandSelect.addEventListener('change', (event) => {
+        state.brand = event.target.value;
+        renderProducts();
+      });
+    }
+
     document.querySelectorAll('.category-filter').forEach((checkbox) => {
       checkbox.addEventListener('change', () => {
         const selected = Array.from(document.querySelectorAll('.category-filter:checked')).map((input) => input.value);
@@ -257,15 +369,32 @@
         renderProducts();
       });
     });
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedType = params.get('type');
+    const requestedSearch = params.get('search');
+    if (requestedType && Array.from(document.querySelectorAll('.category-filter')).some((input) => input.value === requestedType)) {
+      state.categories = new Set([requestedType]);
+      document.querySelectorAll('.category-filter').forEach((input) => {
+        input.checked = input.value === requestedType;
+      });
+    }
+    if (requestedSearch && searchInput) {
+      state.search = requestedSearch;
+      searchInput.value = requestedSearch;
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    renderBrandOptions();
     bindControls();
     renderProducts();
   });
 
   window.TyreXProducts = {
-    getProducts: () => products,
+    getProducts: () => catalog,
+    saveProducts,
     renderProducts
   };
 })();

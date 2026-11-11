@@ -316,7 +316,7 @@
         name: document.getElementById('profName').value.trim(),
         phone: document.getElementById('profPhone').value.trim()
       };
-      localStorage.setItem('tyrex_user', JSON.stringify(updatedUser));
+      localStorage.setItem('torq_user', JSON.stringify(updatedUser));
       window.showToast('Profile information updated successfully!', 'success');
       document.querySelectorAll('.dashboard-user-name').forEach(el => el.textContent = updatedUser.name);
     });

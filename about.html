@@ -29,13 +29,13 @@
           <a href="products.html" class="nav-link">Products</a>
           <a href="pricing.html" class="nav-link">Pricing</a>
           <a href="contact.html" class="nav-link">Contact</a>
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
+
         </nav>
 
         <div class="header-actions">
           <button class="control-btn theme-toggle-btn" title="Toggle theme"><i data-lucide="moon"></i></button>
           <button class="control-btn rtl-toggle-btn" title="Toggle RTL">RTL</button>
-          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a>
+          <a href="login.html" class="btn btn-sm btn-outline header-cta">Login</a><a href="signup.html" class="btn btn-sm btn-outline header-cta">Sign up</a>
           <button class="btn btn-sm btn-primary header-cta" onclick="window.openModal('bookingModal')">Book a Service</button>
           <button class="hamburger-btn" aria-label="Open menu"><i data-lucide="menu"></i></button>
         </div>
@@ -60,11 +60,11 @@
         <a href="products.html" class="mobile-nav-link">Products <i data-lucide="chevron-right"></i></a>
         <a href="pricing.html" class="mobile-nav-link">Pricing <i data-lucide="chevron-right"></i></a>
         <a href="contact.html" class="mobile-nav-link">Contact <i data-lucide="chevron-right"></i></a>
-        <a href="dashboard.html" class="mobile-nav-link">Dashboard <i data-lucide="chevron-right"></i></a>
+
       </div>
       <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
         <button class="btn btn-primary" onclick="window.openModal('bookingModal')">Book a Service</button>
-        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="login.html" class="btn btn-outline">Login</a><a href="signup.html" class="btn btn-primary">Sign up</a>
       </div>
     </div>
 
@@ -78,6 +78,15 @@
         <div class="info-grid reveal">
           <div><span class="eyebrow">Our story</span><h2 style="margin-top:0.7rem;">A workshop born from precision, trust, and performance.</h2><p style="color:var(--text-soft);">TORQ started with a simple idea: every driver deserves expert guidance, accurate diagnostics, and premium equipment without inflated pressure.</p><p style="color:var(--text-soft); margin-top:1rem;">From everyday family cars to luxury performance machines, we approach each tyre and alignment service with a genuine passion for vehicles.</p></div>
           <div class="card-surface" style="padding:1.5rem;"><img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80" alt="TORQ workshop" style="width:100%; height:420px; object-fit:cover; border-radius:18px;"></div>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="showcase-grid reveal">
+          <article class="card-surface" style="padding:1.75rem;"><span class="eyebrow">Our mission</span><h2>Make vehicle care clearer and safer.</h2><p>We help drivers choose appropriate tyres and services through honest advice, careful workmanship, and straightforward explanations.</p></article>
+          <article class="card-surface" style="padding:1.75rem;"><span class="eyebrow">Our vision</span><h2>Be the workshop drivers return to.</h2><p>We aim to build lasting trust through consistent standards, thoughtful recommendations, and respect for every vehicle and budget.</p></article>
+          <article class="card-surface" style="padding:1.75rem;"><span class="eyebrow">Our standard</span><h2>Quality you can understand.</h2><p>From fitment checks to alignment reports, we explain what we find and what we recommend before carrying out additional work.</p></article>
         </div>
       </div>
     </section>
@@ -115,7 +124,7 @@
             <ul class="footer-links">
               <li><a href="contact.html">Contact</a></li>
               <li><a href="products.html">Tyre collection</a></li>
-              <li><a href="dashboard.html">Service dashboard</a></li>
+
               <li><a href="login.html">Account login</a></li>
             </ul>
           </div>
@@ -187,7 +196,7 @@
       </div>
     </div>
 
-  <script src="js/theme.js"></script>
+  <script src="js/theme.js"></script><script src="js/booking.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

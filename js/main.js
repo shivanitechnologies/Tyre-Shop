@@ -1,3 +1,55 @@
+function setupHomeMotion() {
+  if (!document.body.classList.contains('home-page')) return;
+
+  const staggerGroups = [
+    '.hero-content > *',
+    '.stats-grid > .stat-card',
+    '.feature-list > .feature-item',
+    '.service-grid > .service-card',
+    '.showcase-grid > .card-surface'
+  ];
+
+  staggerGroups.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((element, index) => {
+      element.classList.add('reveal');
+      element.style.setProperty('--reveal-delay', `${Math.min(index, 4) * 90}ms`);
+    });
+  });
+
+  const videos = document.querySelectorAll('.hero-background-video');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function syncVideoPlayback() {
+    videos.forEach((video) => {
+      if (reducedMotion.matches || document.visibilityState === 'hidden') {
+        video.pause();
+        return;
+      }
+
+      const bounds = video.getBoundingClientRect();
+      const isVisible = bounds.bottom > 0 && bounds.top < window.innerHeight;
+      if (!isVisible) {
+        video.pause();
+      } else {
+        video.play().catch(() => {
+          video.controls = true;
+          video.removeAttribute('aria-hidden');
+          video.tabIndex = 0;
+          video.setAttribute('aria-label', 'TORQ automotive background video');
+        });
+      }
+    });
+  }
+
+  window.addEventListener('scroll', syncVideoPlayback, { passive: true });
+  window.addEventListener('resize', syncVideoPlayback);
+  document.addEventListener('visibilitychange', syncVideoPlayback);
+  reducedMotion.addEventListener('change', syncVideoPlayback);
+  syncVideoPlayback();
+}
+
+setupHomeMotion();
+
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
@@ -77,6 +129,31 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const button = item.querySelector('.faq-question-btn');
+    const answer = item.querySelector('.faq-answer');
+    if (!button || !answer) return;
+    const setExpanded = (expanded) => {
+      item.classList.toggle('active', expanded);
+      answer.hidden = !expanded;
+      button.setAttribute('aria-expanded', String(expanded));
+    };
+    setExpanded(item.classList.contains('active'));
+    button.addEventListener('click', () => setExpanded(answer.hidden));
+  });
+
+  const tyreFinder = document.getElementById('homeTyreFinder');
+  if (tyreFinder) {
+    tyreFinder.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const type = tyreFinder.querySelector('[name="type"]').value;
+      const search = tyreFinder.querySelector('[name="search"]').value.trim();
+      const params = new URLSearchParams({ type });
+      if (search) params.set('search', search);
+      window.location.href = `products.html?${params.toString()}`;
+    });
+  }
 
   const currentPath = window.location.pathname.split('/').pop();
   document.querySelectorAll('.nav-link, .mobile-nav-link').forEach((link) => {

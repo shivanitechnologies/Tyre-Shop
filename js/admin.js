@@ -8,6 +8,9 @@
 
   // Seed default demonstration customers
   const CUSTOMERS_KEY = 'tyrex_admin_customers';
+  const SERVICE_RATES_KEY = 'torq_admin_service_rates';
+  const PACKAGE_PRICES_KEY = 'torq_admin_package_prices';
+  const SETTINGS_KEY = 'torq_admin_settings';
   const DEFAULT_CUSTOMERS = [
     { id: 'CUST-301', name: 'Alexander Wright', email: 'alex.wright@example.com', phone: '+1 (555) 234-5678', vehicle: 'BMW M3 Competition', visits: 4, spent: '$1,240' },
     { id: 'CUST-302', name: 'Sarah Jenkins', email: 'sarah.j@example.com', phone: '+1 (555) 345-6789', vehicle: 'Porsche Macan GTS', visits: 2, spent: '$680' },
@@ -26,6 +29,7 @@
 
   // Seed contact messages
   const MESSAGES_KEY = 'tyrex_contact_messages';
+  const ARCHIVED_MESSAGES_KEY = 'torq_archived_messages';
   const DEFAULT_MESSAGES = [
     { id: 'MSG-01', name: 'Robert Chen', email: 'robert.c@example.com', phone: '+1 555-881-2233', vehicle: 'Tesla Model S Plaid', service: 'Wheel Alignment', message: 'Experiencing slight steering pull to the right following pothole impact.', date: '2026-11-06' },
     { id: 'MSG-02', name: 'Jessica Taylor', email: 'jess.t@example.com', phone: '+1 555-442-9900', vehicle: 'Toyota Supra GR', service: 'Tyre Replacement', message: 'Do you have Michelin Pilot Sport 4S 275/35 R19 in stock for next Tuesday?', date: '2026-11-05' }
@@ -33,10 +37,148 @@
 
   function getMessages() {
     try {
-      return JSON.parse(localStorage.getItem(MESSAGES_KEY)) || DEFAULT_MESSAGES;
-    } catch (e) {
-      return DEFAULT_MESSAGES;
+      const saved = localStorage.getItem(MESSAGES_KEY);
+      const messages = saved ? JSON.parse(saved) : DEFAULT_MESSAGES;
+      const archivedIds = JSON.parse(localStorage.getItem(ARCHIVED_MESSAGES_KEY) || '[]');
+      if (!Array.isArray(messages) || !Array.isArray(archivedIds)) {
+        throw new Error('Stored messages or archive list has an invalid format.');
+      }
+      return messages.filter((message) => !archivedIds.includes(message.id));
+    } catch (error) {
+      console.error('Could not load TORQ contact messages.', error);
+      return [];
     }
+  }
+
+  function readStoredObject(key) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || '{}');
+      return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+    } catch (error) {
+      console.error(`Could not read TORQ admin data from ${key}.`, error);
+      return {};
+    }
+  }
+
+  function parsePrice(value) {
+    const parsed = Number.parseFloat(String(value || '').replace(/[^0-9.]/g, ''));
+    return Number.isFinite(parsed) ? parsed : 79;
+  }
+
+  function updateAdminCategoryCounts() {
+    const products = window.TyreXProducts ? window.TyreXProducts.getProducts() : [];
+    const counts = { car: 0, bike: 0, suv: 0, wheels: 0, accessories: 0 };
+    products.forEach((product) => {
+      const category = product.type || 'car';
+      if (Object.prototype.hasOwnProperty.call(counts, category)) counts[category] += 1;
+    });
+    document.querySelectorAll('[data-admin-category-count]').forEach((badge) => {
+      const count = counts[badge.dataset.adminCategoryCount] || 0;
+      badge.textContent = `${count} ${count === 1 ? 'Product' : 'Products'}`;
+    });
+  }
+
+  function setupAdminRatesAndSettings() {
+    const serviceRates = readStoredObject(SERVICE_RATES_KEY);
+    const packagePrices = readStoredObject(PACKAGE_PRICES_KEY);
+    const settings = readStoredObject(SETTINGS_KEY);
+
+    document.querySelectorAll('[data-service-rate-value]').forEach((element) => {
+      const value = Number(serviceRates[element.dataset.serviceRateValue]);
+      if (Number.isFinite(value) && value > 0) element.textContent = `$${value.toFixed(2)}`;
+    });
+    document.querySelectorAll('[data-package-price-value]').forEach((element) => {
+      const value = Number(packagePrices[element.dataset.packagePriceValue]);
+      if (Number.isFinite(value) && value > 0) element.textContent = `$${value}`;
+    });
+    document.querySelectorAll('[data-admin-setting]').forEach((input) => {
+      const value = settings[input.dataset.adminSetting];
+      if (value !== undefined) input.value = value;
+    });
+
+    document.querySelectorAll('[data-edit-service-rate]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const key = button.dataset.editServiceRate;
+        const display = document.querySelector(`[data-service-rate-value="${key}"]`);
+        const current = Number((display?.textContent || '').replace(/[^0-9.]/g, ''));
+        const input = window.prompt('Enter the new service rate in dollars:', String(current));
+        if (input === null) return;
+        const value = Number(input);
+        if (!Number.isFinite(value) || value <= 0) {
+          window.showToast('Enter a valid rate greater than zero.', 'error');
+          return;
+        }
+        serviceRates[key] = value;
+        try {
+          localStorage.setItem(SERVICE_RATES_KEY, JSON.stringify(serviceRates));
+          if (display) display.textContent = `$${value.toFixed(2)}`;
+          window.showToast('Service rate saved.', 'success');
+        } catch (error) {
+          window.showToast('Could not save the service rate.', 'error');
+          console.error('Could not save TORQ service rates.', error);
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-edit-package-price]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const key = button.dataset.editPackagePrice;
+        const display = document.querySelector(`[data-package-price-value="${key}"]`);
+        const current = Number((display?.textContent || '').replace(/[^0-9.]/g, ''));
+        const input = window.prompt('Enter the new package price in dollars:', String(current));
+        if (input === null) return;
+        const value = Number(input);
+        if (!Number.isFinite(value) || value <= 0) {
+          window.showToast('Enter a valid price greater than zero.', 'error');
+          return;
+        }
+        packagePrices[key] = value;
+        try {
+          localStorage.setItem(PACKAGE_PRICES_KEY, JSON.stringify(packagePrices));
+          if (display) display.textContent = `$${value}`;
+          window.showToast('Package price saved.', 'success');
+        } catch (error) {
+          window.showToast('Could not save the package price.', 'error');
+          console.error('Could not save TORQ package prices.', error);
+        }
+      });
+    });
+
+    const saveSettingsButton = document.getElementById('adminSaveSettingsBtn');
+    if (saveSettingsButton) {
+      saveSettingsButton.addEventListener('click', () => {
+        const nextSettings = {};
+        document.querySelectorAll('[data-admin-setting]').forEach((input) => {
+          nextSettings[input.dataset.adminSetting] = input.value.trim();
+        });
+        try {
+          localStorage.setItem(SETTINGS_KEY, JSON.stringify(nextSettings));
+          window.showToast('Workshop settings saved.', 'success');
+        } catch (error) {
+          window.showToast('Could not save workshop settings.', 'error');
+          console.error('Could not save TORQ admin settings.', error);
+        }
+      });
+    }
+  }
+
+  function exportAppointmentReport() {
+    const appointments = window.TyreXBooking ? window.TyreXBooking.getAppointments() : [];
+    const columns = ['id', 'name', 'email', 'phone', 'vehicle', 'service', 'date', 'time', 'status', 'price'];
+    const csvValue = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+    const rows = [
+      columns.join(','),
+      ...appointments.map((appointment) => columns.map((column) => csvValue(appointment[column])).join(','))
+    ];
+    const blob = new Blob([rows.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `torq-appointments-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 0);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -114,6 +256,11 @@
     renderAdminCustomers();
     renderAdminMessages();
     setupProductModalActions();
+    setupAdminRatesAndSettings();
+    const customerSearch = document.getElementById('adminCustomerSearch');
+    if (customerSearch) customerSearch.addEventListener('input', renderAdminCustomers);
+    const exportButton = document.getElementById('adminExportReportBtn');
+    if (exportButton) exportButton.addEventListener('click', exportAppointmentReport);
   });
 
   // Calculate & Refresh Admin Metrics & Appointments
@@ -126,10 +273,14 @@
     const totalAppointments = appointments.length;
     const pendingAppointments = appointments.filter(a => a.status === 'Pending').length;
     const completedAppointments = appointments.filter(a => a.status === 'Completed').length;
-    const totalRevenueCalc = appointments.reduce((sum, item) => {
-      const num = parseInt((item.price || '0').replace(/[^0-9]/g, ''), 10) || 79;
-      return sum + num;
-    }, 4850);
+    const totalRevenueCalc = appointments.filter(item => item.status === 'Completed').reduce((sum, item) => {
+      return sum + parsePrice(item.price);
+    }, 0);
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    const monthAppointments = appointments.filter(item => String(item.date || '').startsWith(currentMonth));
+    const monthRevenue = monthAppointments.filter(item => item.status === 'Completed').reduce((sum, item) => {
+      return sum + parsePrice(item.price);
+    }, 0);
 
     const mCustomers = document.getElementById('adminMetricCustomers');
     const mProducts = document.getElementById('adminMetricProducts');
@@ -144,6 +295,10 @@
     if (mPending) mPending.textContent = pendingAppointments;
     if (mCompleted) mCompleted.textContent = completedAppointments;
     if (mRevenue) mRevenue.textContent = `$${totalRevenueCalc.toLocaleString()}`;
+    const reportRevenue = document.getElementById('adminReportRevenue');
+    const reportAppointments = document.getElementById('adminReportAppointments');
+    if (reportRevenue) reportRevenue.textContent = `$${monthRevenue.toLocaleString()}`;
+    if (reportAppointments) reportAppointments.textContent = monthAppointments.length;
 
     // Tables
     const recentTable = document.getElementById('adminRecentAppointmentsTable');
@@ -262,7 +417,7 @@
           const pId = btn.getAttribute('data-id');
           if (confirm(`Are you sure you want to delete product ${pId}?`)) {
             let list = window.TyreXProducts.getProducts();
-            list = list.filter(item => item.id !== pId);
+            list = list.filter(item => String(item.id) !== pId);
             window.TyreXProducts.saveProducts(list);
             window.showToast(`Product deleted successfully`, 'info');
             renderAdminProducts();
@@ -279,6 +434,7 @@
       });
     });
 
+    updateAdminCategoryCounts();
     if (window.lucide) window.lucide.createIcons();
   }
 
@@ -305,6 +461,10 @@
           name,
           brand,
           category,
+          type: category.toLowerCase().includes('bike') ? 'bike' :
+            category.toLowerCase().includes('suv') ? 'suv' :
+              category.toLowerCase().includes('alloy') ? 'wheels' :
+                category.toLowerCase().includes('accessor') ? 'accessories' : 'car',
           size,
           price,
           rating: 4.8,
@@ -334,7 +494,7 @@
 
   function openEditProductModal(productId) {
     const products = window.TyreXProducts.getProducts();
-    const product = products.find(p => p.id === productId);
+    const product = products.find(p => String(p.id) === productId);
     if (!product) return;
 
     let editModal = document.getElementById('adminEditProductModal');
@@ -424,7 +584,12 @@
     const container = document.getElementById('adminCustomersTableBody');
     if (!container) return;
 
-    const customers = getCustomers();
+    const search = (document.getElementById('adminCustomerSearch')?.value || '').trim().toLowerCase();
+    const customers = getCustomers().filter((customer) =>
+      [customer.name, customer.email, customer.phone, customer.vehicle].some((value) =>
+        String(value || '').toLowerCase().includes(search)
+      )
+    );
     container.innerHTML = customers.map(c => `
       <tr>
         <td><strong>#${c.id}</strong></td>
@@ -446,6 +611,10 @@
     if (!container) return;
 
     const messages = getMessages();
+    if (!messages.length) {
+      container.innerHTML = '<p style="color:var(--text-muted);">No new contact messages.</p>';
+      return;
+    }
     container.innerHTML = messages.map(m => `
       <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
@@ -462,12 +631,29 @@
           <a href="mailto:${m.email}" class="btn btn-sm btn-primary">
             <i data-lucide="mail"></i> Reply by Email
           </a>
-          <button class="btn btn-sm btn-outline" onclick="window.showToast('Message archived', 'info'); this.closest('div[style]').remove();">
+          <button class="btn btn-sm btn-outline archive-contact-message-btn" data-message-id="${m.id}">
             Archive
           </button>
         </div>
       </div>
     `).join('');
+
+    container.querySelectorAll('.archive-contact-message-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        let archivedIds;
+        try {
+          archivedIds = JSON.parse(localStorage.getItem(ARCHIVED_MESSAGES_KEY) || '[]');
+          if (!Array.isArray(archivedIds)) throw new Error('Stored archive list is not an array.');
+          archivedIds.push(button.dataset.messageId);
+          localStorage.setItem(ARCHIVED_MESSAGES_KEY, JSON.stringify(Array.from(new Set(archivedIds))));
+          renderAdminMessages();
+          window.showToast('Message archived.', 'info');
+        } catch (error) {
+          window.showToast('Could not archive this message.', 'error');
+          console.error('Could not archive TORQ contact message.', error);
+        }
+      });
+    });
 
     if (window.lucide) window.lucide.createIcons();
   }

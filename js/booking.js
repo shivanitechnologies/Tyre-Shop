@@ -136,25 +136,53 @@
       inp.min = today;
     });
 
-    const bookingForms = document.querySelectorAll('.appointment-booking-form, #bookingModalForm, #contactAppointmentForm');
+    const bookingForms = document.querySelectorAll('.appointment-booking-form, #bookingModalForm, #contactAppointmentForm, #bookingModal form');
     bookingForms.forEach(form => {
+      if (form.dataset.bookingBound === 'true') return;
+      form.dataset.bookingBound = 'true';
+      if (form.closest('#bookingModal')) {
+        const submitButton = form.querySelector('button[type="button"]');
+        if (submitButton) submitButton.type = 'submit';
+        Array.from(form.querySelectorAll('.input-group')).forEach(group => {
+          const label = group.querySelector('label');
+          const field = group.querySelector('input, select, textarea');
+          if (!label || !field) return;
+          const labelText = label.textContent.trim().toLowerCase();
+          if (labelText.startsWith('full name')) {
+            field.name = field.name || 'name';
+            field.required = true;
+          } else if (labelText.startsWith('phone')) {
+            field.name = field.name || 'phone';
+            field.required = true;
+          } else if (labelText.startsWith('email')) {
+            field.name = field.name || 'email';
+          } else if (labelText.startsWith('vehicle')) {
+            field.name = field.name || 'vehicle';
+          } else if (labelText.startsWith('service')) {
+            field.name = field.name || 'service';
+          }
+        });
+      }
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const nameInput = form.querySelector('[name="name"]') || form.querySelector('#bookingName');
-        const emailInput = form.querySelector('[name="email"]') || form.querySelector('#bookingEmail');
-        const phoneInput = form.querySelector('[name="phone"]') || form.querySelector('#bookingPhone');
-        const vehicleInput = form.querySelector('[name="vehicle"]') || form.querySelector('#bookingVehicle');
-        const serviceInput = form.querySelector('[name="service"]') || form.querySelector('#bookingService');
-        const dateInput = form.querySelector('[name="date"]') || form.querySelector('#bookingDate');
-        const timeInput = form.querySelector('[name="time"]') || form.querySelector('#bookingTime');
-        const notesInput = form.querySelector('[name="notes"]') || form.querySelector('#bookingNotes');
+        const byLabel = (labelText) => Array.from(form.querySelectorAll('.input-group, .form-group')).find(group =>
+          group.querySelector('label')?.textContent.trim().toLowerCase().startsWith(labelText)
+        )?.querySelector('input, select, textarea');
+        const nameInput = form.querySelector('[name="name"], #bookingName') || byLabel('full name') || byLabel('customer name');
+        const emailInput = form.querySelector('[name="email"], #bookingEmail') || byLabel('email');
+        const phoneInput = form.querySelector('[name="phone"], #bookingPhone') || byLabel('phone') || byLabel('contact phone');
+        const vehicleInput = form.querySelector('[name="vehicle"], #bookingVehicle') || byLabel('vehicle');
+        const serviceInput = form.querySelector('[name="service"], #bookingService') || byLabel('service');
+        const dateInput = form.querySelector('[name="date"], #bookingDate') || byLabel('date');
+        const timeInput = form.querySelector('[name="time"], #bookingTime') || byLabel('time');
+        const notesInput = form.querySelector('[name="notes"], #bookingNotes') || byLabel('notes');
 
         if (!nameInput || !nameInput.value.trim()) {
           if (window.showToast) window.showToast('Please enter your full name', 'error');
           return;
         }
-        if (!emailInput || !emailInput.value.trim() || !emailInput.value.includes('@')) {
+        if (emailInput && emailInput.value.trim() && !emailInput.value.includes('@')) {
           if (window.showToast) window.showToast('Please provide a valid email address', 'error');
           return;
         }
@@ -165,7 +193,7 @@
 
         const appointment = addAppointment({
           name: nameInput.value.trim(),
-          email: emailInput.value.trim(),
+          email: emailInput ? emailInput.value.trim() : '',
           phone: phoneInput.value.trim(),
           vehicle: vehicleInput ? vehicleInput.value.trim() : 'Standard Vehicle',
           vehiclePlate: 'AUTO-' + Math.floor(100 + Math.random() * 900),
@@ -186,7 +214,7 @@
         form.reset();
 
         if (window.showToast) {
-          window.showToast(`Appointment Confirmed! Reference: #${appointment.id}`, 'success');
+          window.showToast(`Demo request saved locally: #${appointment.id}. It has not been sent to TORQ.`, 'success');
         }
 
         // Trigger dynamic updates if on dashboard or admin page
@@ -203,7 +231,11 @@
   // Run on startup
   seedDefaultAppointments();
 
-  document.addEventListener('DOMContentLoaded', initBookingForms);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBookingForms);
+  } else {
+    initBookingForms();
+  }
 
   // Expose API
   window.TyreXBooking = {
