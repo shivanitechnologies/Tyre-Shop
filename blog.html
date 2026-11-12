@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tyre Care Blog | TORQ</title>
+  <meta name="description" content="Practical tyre, wheel alignment, and vehicle care guides from TORQ.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <main class="section-padding">
+    <div class="container">
+      <header class="section-header reveal"><a class="eyebrow" href="index.html">TORQ Home</a><h1>Tyre care, explained.</h1><p>Short, practical guides to help you make informed decisions about tyres and vehicle care.</p></header>
+      <div class="card-surface reveal" style="padding:1rem; display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; margin-bottom:2rem;">
+        <label for="blogSearch">Search articles</label><input id="blogSearch" type="search" placeholder="Search tyre care..." style="flex:1; min-width:200px;">
+        <label for="blogCategory">Topic</label><select id="blogCategory"><option value="all">All topics</option><option value="tyres">Tyres</option><option value="alignment">Alignment</option><option value="safety">Safety</option></select>
+      </div>
+      <div class="showcase-grid" id="blogArticleList">
+        <article class="card-surface blog-card" data-category="tyres" style="padding:1.5rem;"><span class="eyebrow">Tyres · 4 min read</span><h2>How to read the numbers on your tyre sidewall</h2><p>Learn what tyre width, aspect ratio, construction, and rim diameter mean before comparing replacement options.</p><a class="link-arrow" href="blog-post.html?article=tyre-size">Read article <i data-lucide="arrow-right"></i></a></article>
+        <article class="card-surface blog-card" data-category="alignment" style="padding:1.5rem;"><span class="eyebrow">Alignment · 3 min read</span><h2>Signs your wheel alignment may need checking</h2><p>Steering pull, an off-center wheel, and uneven tread wear are useful reasons to book an inspection.</p><a class="link-arrow" href="blog-post.html?article=alignment-signs">Read article <i data-lucide="arrow-right"></i></a></article>
+        <article class="card-surface blog-card" data-category="safety" style="padding:1.5rem;"><span class="eyebrow">Safety · 3 min read</span><h2>A simple monthly tyre safety check</h2><p>Build a quick routine around pressure, tread condition, and visible damage without special equipment.</p><a class="link-arrow" href="blog-post.html?article=monthly-check">Read article <i data-lucide="arrow-right"></i></a></article>
+      </div>
+      <p id="blogEmptyState" hidden>No articles match your search.</p>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container"><p><a href="index.html">TORQ Home</a> · <a href="services.html">Services</a> · <a href="contact.html">Contact</a></p></div></footer>
+  <script src="js/theme.js"></script><script src="js/main.js"></script><script src="js/blog.js"></script>
+</body>
+</html>

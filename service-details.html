@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wheel Alignment Service Details | TORQ</title>
+  <meta name="description" content="Learn what TORQ checks during a wheel alignment, when to book, and transparent starting prices.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <main>
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80');">
+      <div class="container"><div class="page-hero-content reveal"><a class="eyebrow" style="color:#ffbe98;" href="services.html">Services / Details</a><h1>Wheel alignment, measured for your vehicle.</h1><p>Understand what an alignment check includes, when it may help, and what to expect before booking.</p><button class="btn btn-primary" type="button" onclick="window.openModal('bookingModal')">Request an appointment</button></div></div>
+    </section>
+    <section class="section-padding">
+      <div class="container info-grid service-detail-grid">
+        <article class="reveal">
+          <span class="eyebrow">What we check</span>
+          <h2>A careful inspection before adjustment.</h2>
+          <p>We inspect tyre wear and steering concerns, then measure wheel angles against the vehicle's alignment specifications. If adjustment is appropriate, we explain the findings and get your approval before proceeding.</p>
+          <ul><li>Visual tyre and steering inspection</li><li>Measurement of wheel alignment angles</li><li>Adjustment where supported by vehicle specifications</li><li>Post-service review of the results</li></ul>
+        </article>
+        <aside class="card-surface reveal" style="padding:1.5rem;">
+          <h3>When to book a check</h3>
+          <p>Consider an inspection if your vehicle pulls to one side, the steering wheel is off-center, tyres show uneven wear, or suspension work has recently been completed.</p>
+          <p><strong>Typical time:</strong> about 45 minutes<br><strong>Starting price:</strong> $79</p>
+          <p>Final price can vary by vehicle and condition. We confirm it with you before additional work.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="section-padding bg-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">Price guide</span><h2>Alignment service pricing</h2></div>
+        <div class="table-responsive card-surface reveal" style="padding:1rem;">
+          <table class="data-table"><thead><tr><th>Service</th><th>Includes</th><th>Starting price</th><th>Typical time</th></tr></thead><tbody>
+            <tr><td>Alignment inspection</td><td>Visual checks and measurement report</td><td>$39</td><td>20 minutes</td></tr>
+            <tr><td>Four-wheel alignment</td><td>Measurement and applicable adjustments</td><td>$79</td><td>45 minutes</td></tr>
+            <tr><td>Alignment with tyre fitting</td><td>Alignment check alongside approved fitting</td><td>From $99</td><td>Quote after inspection</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header reveal"><span class="eyebrow">FAQs</span><h2>Alignment questions</h2></div>
+        <div class="faq-container reveal">
+          <div class="faq-item active"><button class="faq-question-btn" type="button"><span>Do I need alignment every time I replace tyres?</span><span class="faq-icon-arrow"><i data-lucide="chevron-down"></i></span></button><div class="faq-answer">Not always. An inspection is useful when there is uneven wear, a steering concern, or recent suspension work.</div></div>
+          <div class="faq-item"><button class="faq-question-btn" type="button"><span>Can every alignment angle be adjusted?</span><span class="faq-icon-arrow"><i data-lucide="chevron-down"></i></span></button><div class="faq-answer">Adjustment options depend on the vehicle design and the condition of its components. We explain any limitations before proceeding.</div></div>
+          <div class="faq-item"><button class="faq-question-btn" type="button"><span>Will you make repairs without asking?</span><span class="faq-icon-arrow"><i data-lucide="chevron-down"></i></span></button><div class="faq-answer">No. We review findings and confirm any additional work and pricing with you first.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="modal-overlay" id="bookingModal"><div class="modal-card"><div class="modal-header"><h3 class="modal-title">Book wheel alignment</h3><button class="modal-close-btn" aria-label="Close booking dialog"><i data-lucide="x"></i></button></div><div class="modal-body"><form class="appointment-booking-form"><div class="form-grid"><div class="input-group"><label>Full name</label><input name="name" required></div><div class="input-group"><label>Email</label><input name="email" type="email"></div><div class="input-group"><label>Phone</label><input name="phone" type="tel" required></div><div class="input-group"><label>Vehicle</label><input name="vehicle" placeholder="Make, model, year"></div><div class="input-group"><label>Service</label><select name="service"><option>Wheel alignment</option></select></div></div><button class="btn btn-primary" type="submit">Save demo request</button></form></div></div></div>
+  <footer class="site-footer"><div class="container"><p><a href="index.html">TORQ Home</a> · <a href="services.html">All services</a> · <a href="contact.html">Contact</a></p></div></footer>
+  <script src="js/theme.js"></script><script src="js/booking.js"></script><script src="js/main.js"></script>
+</body>
+</html>
